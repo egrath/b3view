@@ -1,5 +1,3 @@
-#Build instructions
-
 =Prequisites=
 
   * C++ Compiler
