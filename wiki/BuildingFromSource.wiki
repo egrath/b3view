@@ -15,7 +15,7 @@ To generate a working makefile, edit the .pro file to reflect your path settings
 {{{
 qmake
 make -f Makefile.Debug
-}}}}
+}}}
 
 this will (hopfully) build a binary in the "build" subdirectory.
 
