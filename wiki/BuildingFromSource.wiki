@@ -1,0 +1,26 @@
+#Build instructions
+
+=Prequisites=
+
+  * C++ Compiler
+  * Irrlicht Library
+  * Linux only: QtCreator (or Qmake) 
+
+=Linux=
+
+You need Qt4 installed if you want to build yourself - not because it's using Qt, i just use QtCreator for doing the development and this IDE uses Qmake as it's built system.
+
+To generate a working makefile, edit the .pro file to reflect your path settings and run:
+
+{{{
+qmake
+make -f Makefile.Debug
+}}}}
+
+this will (hopfully) build a binary in the "build" subdirectory.
+
+=Windows=
+
+In the "win32" folder of your source tree there's a VC++2010 Solution. Open it up and edit the properties to reflect the correct path to the Irrlicht Library. After building, you end up with a "win32_build" folder in the source tree which contains the win32 binary. 
+
+Additionally you have to manually copy the arial*.* and *.b3d files from the linux build directory to the output folder
