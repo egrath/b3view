@@ -2,7 +2,7 @@
 
   * C++ Compiler (Linux: gcc, icc; Windows: Visual Studio 2010)
   * Irrlicht Library
-  * Linux only: QtCreator (or Qmake) 
+  * Linux only: QtCreator/Qt
 
 =Linux=
 
