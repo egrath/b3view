@@ -99,7 +99,11 @@ void Engine::checkResize()
 
 Engine::Engine()
 {
-    m_Device = createDevice( EDT_OPENGL, dimension2d<u32>( 1024, 768 ), 32, false, false, false, 0 );
+#if WIN32
+    m_Device = createDevice( EDT_DIRECT3D9, dimension2d<u32>( 1024, 768 ), 32, false, false, false, 0 );
+#else
+	m_Device = createDevice( EDT_OPENGL, dimension2d<u32>( 1024, 768 ), 32, false, false, false, 0 );
+#endif
     m_Device->setResizable( true );
 
     m_EventHandler = new EventHandler( m_Device );
@@ -108,7 +112,9 @@ Engine::Engine()
     m_Driver = m_Device->getVideoDriver();
     m_Scene = m_Device->getSceneManager();
 
-    m_Device->setWindowCaption( L"Blitz3D Viewer" );
+	wstringstream windowTitle;
+	windowTitle << L"Blitz3D Viewer [" << m_Driver->getName() << L"]";
+    m_Device->setWindowCaption( windowTitle.str().c_str() );
 
     setupScene();
 

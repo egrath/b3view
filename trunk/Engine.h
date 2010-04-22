@@ -6,6 +6,7 @@ class UserInterface;
 class View;
 
 #include <string>
+#include <sstream>
 #include <iostream>
 #include <irrlicht.h>
 
@@ -16,6 +17,7 @@ class View;
 using std::cout;
 using std::endl;
 using std::wstring;
+using std::wstringstream;
 
 using namespace irr;
 using namespace irr::core;
