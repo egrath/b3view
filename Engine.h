@@ -55,14 +55,14 @@ private:
     void drawAxisLines();
     void drawBackground();
     void checkResize();
-    IGUIEnvironment *getGUIEnvironment() const;
-    void loadMesh( const wstring &fileName );
+    IGUIEnvironment *getGUIEnvironment() const;    
 
 public:
     Engine();
     ~Engine();  
 
-    void run();    
+    void run(); 
+	void loadMesh( const wstring &fileName );
 };
 
 #endif // ENGINE_H

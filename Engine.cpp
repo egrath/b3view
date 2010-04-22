@@ -72,14 +72,6 @@ void Engine::drawBackground()
         SColor( 255, 224, 224, 255 ));
 }
 
-void Engine::loadMesh( const wstring &fileName )
-{
-    if( m_LoadedMesh != 0 )
-        m_LoadedMesh->remove();
-
-    m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( m_Scene->getMesh( fileName.c_str() ));
-}
-
 void Engine::checkResize()
 {
     if(( m_WindowSize->Width != m_Driver->getScreenSize().Width ) || ( m_WindowSize->Height != m_Driver->getScreenSize().Height ))
@@ -131,10 +123,7 @@ Engine::Engine()
 
     // Set Engine enabled
     m_RunEngine = true;
-
-    // Load test model
     m_LoadedMesh = 0;
-    loadMesh( L"test.b3d" );
 
     // Store actual window size
     m_WindowSize = new dimension2d<u32>();
@@ -146,6 +135,14 @@ Engine::~Engine()
 {
     m_Device->drop();
     delete m_WindowSize;
+}
+
+void Engine::loadMesh( const wstring &fileName )
+{
+    if( m_LoadedMesh != 0 )
+        m_LoadedMesh->remove();
+
+    m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( m_Scene->getMesh( fileName.c_str() ));
 }
 
 void Engine::run()

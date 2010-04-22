@@ -3,13 +3,14 @@
 // PRIVATE
 void UserInterface::setupUserInterface()
 {
+	// Menu
     IGUIContextMenu *menu = m_Gui->addMenu();
     menu->addItem( L"File", UIE_FILEMENU, true, true );
 
+	// File Menu
     IGUIContextMenu *fileMenu = menu->getSubMenu( 0 );
     fileMenu->addItem( L"Load", UIC_FILE_LOAD );
     fileMenu->addItem( L"Quit", UIC_FILE_QUIT );
-
 
     // Set Font for UI Elements
     m_GuiFont = m_Gui->getFont( "arial.xml" );

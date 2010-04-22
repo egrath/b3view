@@ -52,6 +52,7 @@ View::~View()
 // IEventReceiver
 bool View::OnEvent( const SEvent &event )
 {
+	// If it's not a mouse event, just return unhandled
     if( event.EventType != EET_MOUSE_INPUT_EVENT )
         return false;
 
