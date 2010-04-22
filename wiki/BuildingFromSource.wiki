@@ -1,6 +1,6 @@
 =Prequisites=
 
-  * C++ Compiler
+  * C++ Compiler (Linux: gcc, icc; Windows: Visual Studio 2010)
   * Irrlicht Library
   * Linux only: QtCreator (or Qmake) 
 
@@ -19,6 +19,9 @@ this will (hopfully) build a binary in the "build" subdirectory.
 
 =Windows=
 
+
+If you use MinGW the Linux instructions apply - below is for Visual Studio users.
+
 In the "win32" folder of your source tree there's a VC++2010 Solution. Open it up and edit the properties to reflect the correct path to the Irrlicht Library. After building, you end up with a "win32_build" folder in the source tree which contains the win32 binary. 
 
-Additionally you have to manually copy the arial*.* and *.b3d files from the linux build directory to the output folder
+Additionally you have to manually copy the arial'*' and '*'.b3d files from the linux build directory to the output folder
