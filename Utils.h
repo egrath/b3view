@@ -5,9 +5,16 @@
 #include <irrlicht.h>
 #include "Debug.h"
 
-using irr::core::vector3df;
+using namespace irr::core;
+using namespace irr::scene;
+using namespace irr::video;
 using namespace std;
 
-void dumpVectorToConsole( const vector3df &vector );
+class Utility
+{
+public:
+    static void dumpVectorToConsole( const vector3df &vector );
+    static void dumpMeshInfoToConsole( IAnimatedMeshSceneNode *node );
+};
 
 #endif // UTILS_H

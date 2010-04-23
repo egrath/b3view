@@ -4,6 +4,7 @@
 // Forward declaration of class Engine
 class Engine;
 
+#include <sstream>
 #include <string>
 #include <irrlicht.h>
 
@@ -22,7 +23,7 @@ enum UserInterfaceElements
     UIE_MAINWINDOW      = 1000,
     UIE_LOADBUTTON      = 1001,
     UIE_LOADFILEDIALOG  = 1002,
-    UIE_FILEMENU        = 1003
+    UIE_FILEMENU        = 1003,
 };
 
 enum UserInterfaceCommands
@@ -46,6 +47,7 @@ public:
     UserInterface( Engine *device );
     ~UserInterface();
     IGUIEnvironment * getGUIEnvironment() const;
+    void drawStatusLine() const;
 
     // IEventReceiver
     virtual bool OnEvent( const SEvent &event );

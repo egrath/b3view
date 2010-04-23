@@ -24,6 +24,11 @@ enum EventReceiverType
     ERT_3DVIEW = 2
 };
 
+enum UserEventIdentifier
+{
+    UEI_WINDOWSIZECHANGED = 1
+};
+
 class EventHandler : public IEventReceiver
 {
 private:

@@ -52,10 +52,20 @@ View::~View()
 // IEventReceiver
 bool View::OnEvent( const SEvent &event )
 {
-	// If it's not a mouse event, just return unhandled
-    if( event.EventType != EET_MOUSE_INPUT_EVENT )
+    // If it's not a mouse event or window resize event, return
+    if( event.EventType != EET_MOUSE_INPUT_EVENT && !( event.EventType == EET_USER_EVENT && event.UserEvent.UserData1 == UEI_WINDOWSIZECHANGED ))
         return false;
 
+    // Handle window resize
+    if( event.EventType == EET_USER_EVENT && event.UserEvent.UserData1 == UEI_WINDOWSIZECHANGED )
+    {
+        dimension2d<u32> windowSize = m_Engine->m_Driver->getScreenSize();
+        f32 aspectRatio = (f32) windowSize.Width / windowSize.Height;
+        debug() << "Setting aspect to: " << aspectRatio << endl;
+        m_Engine->m_Scene->getActiveCamera()->setAspectRatio( aspectRatio );
+    }
+
+    // Handle mouse event
     const SEvent::SMouseInput *mouseEvent = &( event.MouseInput );
 
     if( mouseEvent->Event == EMIE_MMOUSE_PRESSED_DOWN )

@@ -56,7 +56,11 @@ int main( int argc, char **argv )
 wchar_t * getWideCharString( char *str )
 {
 	wchar_t *dest = ( wchar_t * ) malloc( sizeof( wchar_t ) * ( strlen( str ) + 1 ));
-	mbstowcs( dest, str, strlen( str ));
+
+    int resultSize = mbstowcs( 0, str, strlen( str ));
+    mbstowcs( dest, str, strlen( str ));
+
+    dest[resultSize] = '\0';
 
 	return dest;
 }

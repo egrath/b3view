@@ -22,6 +22,22 @@ void UserInterface::displayLoadFileDialog()
     m_Gui->addFileOpenDialog( L"Select file to load", true, 0, UIE_LOADFILEDIALOG );
 }
 
+void UserInterface::handleMenuItemPressed( IGUIContextMenu *menu )
+{
+    s32 id = menu->getItemCommandId( menu->getSelectedItem() );
+
+    switch( id )
+    {
+    case UIC_FILE_LOAD:
+        displayLoadFileDialog();
+        break;
+
+    case UIC_FILE_QUIT:
+        m_Engine->m_RunEngine = false;
+        break;
+    }
+}
+
 // PUBLIC
 UserInterface::UserInterface( Engine *engine )
 {
@@ -41,20 +57,8 @@ IGUIEnvironment * UserInterface::getGUIEnvironment() const
     return m_Gui;
 }
 
-void UserInterface::handleMenuItemPressed( IGUIContextMenu *menu )
+void UserInterface::drawStatusLine() const
 {
-    s32 id = menu->getItemCommandId( menu->getSelectedItem() );
-
-    switch( id )
-    {
-    case UIC_FILE_LOAD:
-        displayLoadFileDialog();
-        break;
-
-    case UIC_FILE_QUIT:
-        m_Engine->m_RunEngine = false;
-        break;
-    }
 }
 
 // IEventReceiver

@@ -56,6 +56,7 @@ private:
     void drawBackground();
     void checkResize();
     IGUIEnvironment *getGUIEnvironment() const;    
+    s32 getNumberOfVertices();
 
 public:
     Engine();
