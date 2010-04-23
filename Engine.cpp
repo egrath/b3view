@@ -137,7 +137,11 @@ Engine::Engine()
     m_EventHandler->addEventReceiver( ERT_3DVIEW, m_View );
 
     // Load font for displaying Axis names
-    m_AxisFont = m_Device->getGUIEnvironment()->getFont( "arial.xml" );
+    m_AxisFontFace = new CGUITTFace();
+    m_AxisFontFace->load( "arial.ttf" );
+    m_AxisFont = new CGUITTFont( m_UserInterface->getGUIEnvironment() );
+    m_AxisFont->attach( m_AxisFontFace, 14 );
+    m_AxisFont->AntiAlias = false;
 
     // Set Engine enabled
     m_RunEngine = true;
@@ -153,6 +157,8 @@ Engine::~Engine()
 {
     m_Device->drop();
     delete m_WindowSize;
+    delete m_AxisFont;
+    delete m_AxisFontFace;
 }
 
 void Engine::loadMesh( const wstring &fileName )

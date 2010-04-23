@@ -7,13 +7,15 @@ SOURCES += main.cpp \
     UserInterface.cpp \
     Debug.cpp \
     View.cpp \
-    Utils.cpp
+    Utils.cpp \
+    extlib/CGUITTFont.cpp
 HEADERS += Engine.h \
     EventHandler.h \
     UserInterface.h \
     Debug.h \
     View.h \
-    Utils.h
+    Utils.h \
+    extlib/CGUITTFont.h
 CONFIG += warn_off
 
 # Irrlicht
@@ -24,3 +26,7 @@ LIBS += -L$$IRRLICHTBASE/source/Irrlicht \
     -lX11 \
     -lGL \
     -lXxf86vm
+
+# Freetype
+INCLUDEPATH += /usr/include/freetype2
+LIBS += -lfreetype

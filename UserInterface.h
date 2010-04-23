@@ -11,6 +11,8 @@ class Engine;
 #include "Debug.h"
 #include "Engine.h"
 
+#include "extlib/CGUITTFont.h"
+
 using namespace irr;
 using namespace irr::core;
 using namespace irr::gui;
@@ -20,7 +22,7 @@ using std::wstring;
 
 enum UserInterfaceElements
 {
-    UIE_MAINWINDOW      = 1000,
+    UIE_PLAYBACKWINDOW  = 1000,
     UIE_LOADBUTTON      = 1001,
     UIE_LOADFILEDIALOG  = 1002,
     UIE_FILEMENU        = 1003,
@@ -37,7 +39,8 @@ class UserInterface : public IEventReceiver
 private:
     Engine *m_Engine;
     IGUIEnvironment *m_Gui;
-    IGUIFont *m_GuiFont;
+    CGUITTFont *m_GuiFont;
+    CGUITTFace *m_GuiFontFace;
 
     void setupUserInterface();
     void displayLoadFileDialog();

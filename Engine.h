@@ -14,6 +14,8 @@ class View;
 #include "UserInterface.h"
 #include "View.h"
 
+#include "extlib/CGUITTFont.h"
+
 using std::cout;
 using std::endl;
 using std::wstring;
@@ -42,7 +44,9 @@ private:
     IVideoDriver *m_Driver;
     ISceneManager *m_Scene;
     IAnimatedMeshSceneNode *m_LoadedMesh;
-    IGUIFont *m_AxisFont;
+    CGUITTFont *m_AxisFont;
+    CGUITTFace *m_AxisFontFace;
+
     dimension2d<u32> *m_WindowSize;
 
     bool m_RunEngine;
