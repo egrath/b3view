@@ -13,8 +13,17 @@ void UserInterface::setupUserInterface()
     fileMenu->addItem( L"Quit", UIC_FILE_QUIT );
 
     // Playback Control Window
-    IGUIWindow *playbackWindow = m_Gui->addWindow( rect<s32>( vector2d<s32>( 20, 60 ), dimension2d<s32>( 160, 300 )), false, L"Playback", 0, UIE_PLAYBACKWINDOW );
+    dimension2d<u32> windowSize = m_Engine->m_Driver->getScreenSize();
+    IGUIWindow *playbackWindow = m_Gui->addWindow(
+            rect<s32>( vector2d<s32>( windowSize.Width - 4 - 160, 28 ), dimension2d<s32>( 160, 300 )), false, L"Playback", 0, UIE_PLAYBACKWINDOW );
     playbackWindow->getCloseButton()->setVisible( false );
+    IGUIButton *playbackStartStopButton = m_Gui->addButton(
+            rect<s32>( vector2d<s32>( 4, 24 ), dimension2d<s32>( playbackWindow->getClientRect().getWidth() - 8, 24 )),
+            playbackWindow,
+            UIE_PLAYBACKSTARTSTOPBUTTON,
+            L"Start/Stop",
+            0
+    );
 
     // Set Font for UI Elements
     m_GuiFontFace = new CGUITTFace();

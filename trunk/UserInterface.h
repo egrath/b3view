@@ -22,10 +22,11 @@ using std::wstring;
 
 enum UserInterfaceElements
 {
-    UIE_PLAYBACKWINDOW  = 1000,
-    UIE_LOADBUTTON      = 1001,
-    UIE_LOADFILEDIALOG  = 1002,
-    UIE_FILEMENU        = 1003,
+    UIE_PLAYBACKWINDOW              = 1000,
+    UIE_LOADBUTTON                  = 1001,
+    UIE_LOADFILEDIALOG              = 1002,
+    UIE_FILEMENU                    = 1003,
+    UIE_PLAYBACKSTARTSTOPBUTTON     = 1004
 };
 
 enum UserInterfaceCommands
