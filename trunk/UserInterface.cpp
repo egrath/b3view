@@ -12,8 +12,16 @@ void UserInterface::setupUserInterface()
     fileMenu->addItem( L"Load", UIC_FILE_LOAD );
     fileMenu->addItem( L"Quit", UIC_FILE_QUIT );
 
+    // Playback Control Window
+    IGUIWindow *playbackWindow = m_Gui->addWindow( rect<s32>( vector2d<s32>( 20, 60 ), dimension2d<s32>( 160, 300 )), false, L"Playback", 0, UIE_PLAYBACKWINDOW );
+    playbackWindow->getCloseButton()->setVisible( false );
+
     // Set Font for UI Elements
-    m_GuiFont = m_Gui->getFont( "arial.xml" );
+    m_GuiFontFace = new CGUITTFace();
+    m_GuiFontFace->load( "arial.ttf" );
+    m_GuiFont = new CGUITTFont( m_Gui );
+    m_GuiFont->attach( m_GuiFontFace, 14 );
+
     m_Gui->getSkin()->setFont( m_GuiFont );
 }
 
@@ -50,6 +58,7 @@ UserInterface::UserInterface( Engine *engine )
 UserInterface::~UserInterface()
 {
     delete m_GuiFont;
+    delete m_GuiFontFace;
 }
 
 IGUIEnvironment * UserInterface::getGUIEnvironment() const
