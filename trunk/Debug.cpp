@@ -5,4 +5,3 @@ ostream & debug()
     std::flush( cout );
     return cout;
 }
-

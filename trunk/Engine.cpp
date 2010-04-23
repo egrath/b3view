@@ -79,10 +79,28 @@ void Engine::checkResize()
         m_WindowSize->Width = m_Driver->getScreenSize().Width;
         m_WindowSize->Height = m_Driver->getScreenSize().Height;
 
-        f32 aspectRatio = (f32) m_WindowSize->Width / m_WindowSize->Height;
-        debug() << "Setting aspect to: " << aspectRatio << endl;
-        m_Scene->getActiveCamera()->setAspectRatio( aspectRatio );
+        // Send custom event
+        IEventReceiver *eventReceiver = m_Device->getEventReceiver();
+
+        SEvent event;
+        event.EventType = EET_USER_EVENT;
+        event.UserEvent.UserData1 = UEI_WINDOWSIZECHANGED;
+
+        eventReceiver->OnEvent( event );
     }
+}
+
+s32 Engine::getNumberOfVertices()
+{
+    IMesh *mesh = m_LoadedMesh->getMesh()->getMesh( 0, 255, -1, -1 );
+
+    int vertices = 0;
+    for( int bufferIndex = 0; bufferIndex < mesh->getMeshBufferCount(); bufferIndex ++ )
+        vertices += mesh->getMeshBuffer( bufferIndex )->getVertexCount();
+
+    cout << vertices << endl;
+
+    return vertices;
 }
 
 /* //////////////////////////////////////////////////////////////////////////
@@ -143,6 +161,7 @@ void Engine::loadMesh( const wstring &fileName )
         m_LoadedMesh->remove();
 
     m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( m_Scene->getMesh( fileName.c_str() ));
+    Utility::dumpMeshInfoToConsole( m_LoadedMesh );
 }
 
 void Engine::run()
@@ -161,7 +180,9 @@ void Engine::run()
         drawBackground();           // Draw Background
         drawAxisLines();            // Draw XYZ Axis
         m_Scene->drawAll();         // Draw Scenegraph
+
         m_UserInterface->getGUIEnvironment()->drawAll();
+        m_UserInterface->drawStatusLine();
 
         m_Driver->endScene();
 

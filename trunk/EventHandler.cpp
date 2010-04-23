@@ -33,5 +33,13 @@ bool EventHandler::OnEvent( const SEvent &event )
         iter->second->OnEvent( event );
     }
 
+    // Window resize handling - send to all subscribers
+    if( event.EventType == EET_USER_EVENT && event.UserEvent.UserData1 == UEI_WINDOWSIZECHANGED )
+    {
+        map<EventReceiverType,IEventReceiver *>::iterator iter;
+        for( iter = m_EventReceivers->begin(); iter != m_EventReceivers->end(); iter ++ )
+            iter->second->OnEvent( event );
+    }
+
     return false;
 }
