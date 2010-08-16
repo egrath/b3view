@@ -7,11 +7,11 @@
 void Engine::setupScene()
 {
     // Setup Light
-    ILightSceneNode *light = m_Scene->addLightSceneNode();
-    light->setID( SIID_LIGHT );
-    light->setLightType( ELT_DIRECTIONAL );
-    light->getLightData().AmbientColor = SColorf( 0.2f, 0.2f, 0.2f );
-    light->getLightData().DiffuseColor = SColorf( 0.8f, 0.8f, 0.8f );
+    m_SceneLight = m_Scene->addLightSceneNode();
+    m_SceneLight->setID( SIID_LIGHT );
+    m_SceneLight->setLightType( ELT_DIRECTIONAL );
+    m_SceneLight->getLightData().AmbientColor = SColorf( 0.2f, 0.2f, 0.2f );
+    m_SceneLight->getLightData().DiffuseColor = SColorf( 0.8f, 0.8f, 0.8f );
     m_Scene->setAmbientLight( SColorf( 0.2f, 0.2f, 0.2f ));
 
     // Setup Camera
@@ -168,6 +168,27 @@ void Engine::loadMesh( const wstring &fileName )
 
     m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( m_Scene->getMesh( fileName.c_str() ));
     Utility::dumpMeshInfoToConsole( m_LoadedMesh );
+}
+
+void Engine::setMeshDisplayMode( bool wireframe, bool lighting )
+{
+    for( int materialIndex = 0; materialIndex < m_LoadedMesh->getMaterialCount(); materialIndex ++ )
+    {
+        // Set Wireframe display
+        m_LoadedMesh->getMaterial( materialIndex ).Wireframe = wireframe;
+
+        // Set Lighting
+        if( ! lighting )
+        {
+            m_LoadedMesh->getMaterial( materialIndex ).Lighting = false;
+            m_LoadedMesh->getMaterial( materialIndex ).EmissiveColor = SColor( 255, 255, 255, 255 );
+        }
+        else
+        {
+            m_LoadedMesh->getMaterial( materialIndex ).Lighting = true;
+            m_LoadedMesh->getMaterial( materialIndex ).EmissiveColor = SColor( 255, 0, 0, 0 );
+        }
+    }
 }
 
 void Engine::run()

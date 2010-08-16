@@ -6,11 +6,17 @@ void UserInterface::setupUserInterface()
 	// Menu
     IGUIContextMenu *menu = m_Gui->addMenu();
     menu->addItem( L"File", UIE_FILEMENU, true, true );
+    menu->addItem( L"View", UIE_VIEWMENU, true, true );
 
 	// File Menu
     IGUIContextMenu *fileMenu = menu->getSubMenu( 0 );
     fileMenu->addItem( L"Load", UIC_FILE_LOAD );
     fileMenu->addItem( L"Quit", UIC_FILE_QUIT );
+
+    // View Menu
+    IGUIContextMenu *viewMenu = menu->getSubMenu( 1 );
+    viewMenu->addItem( L"Wireframe Mesh", UIC_VIEW_WIREFRAME, true, false, false, true );
+    viewMenu->addItem( L"Lighting",UIC_VIEW_LIGHTING, true, false, true, true );
 
     // Playback Control Window
     dimension2d<u32> windowSize = m_Engine->m_Driver->getScreenSize();
@@ -52,6 +58,16 @@ void UserInterface::handleMenuItemPressed( IGUIContextMenu *menu )
     case UIC_FILE_QUIT:
         m_Engine->m_RunEngine = false;
         break;
+
+    case UIC_VIEW_WIREFRAME:
+        m_WireframeDisplay = m_WireframeDisplay ? false : true;
+        m_Engine->setMeshDisplayMode( m_WireframeDisplay, m_Lighting );
+        break;
+
+    case UIC_VIEW_LIGHTING:
+        m_Lighting = m_Lighting ? false : true;
+        m_Engine->setMeshDisplayMode( m_WireframeDisplay, m_Lighting );
+        break;
     }
 }
 
@@ -60,6 +76,9 @@ UserInterface::UserInterface( Engine *engine )
 {
     m_Engine = engine;
     m_Gui = engine->getGUIEnvironment();
+
+    m_WireframeDisplay = false;
+    m_Lighting = true;
 
     setupUserInterface();
 }
@@ -91,9 +110,10 @@ bool UserInterface::OnEvent( const SEvent &event )
     switch( ge->Caller->getID() )
     {
     case UIE_FILEMENU:
+    case UIE_VIEWMENU:
         // call handler for all menu related actions
         handleMenuItemPressed( static_cast<IGUIContextMenu *>( ge->Caller ));
-        break;
+        break;    
 
     case UIE_LOADFILEDIALOG:
         if( ge->EventType == EGET_FILE_SELECTED )

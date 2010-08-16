@@ -21,11 +21,12 @@ CONFIG += warn_off
 # Irrlicht
 IRRLICHTBASE = /home/er/tmp/irrlicht/trunk
 INCLUDEPATH += $$IRRLICHTBASE/include
-LIBS += -L$$IRRLICHTBASE/source/Irrlicht \
+LIBS += -L$$IRRLICHTBASE/lib/Linux \
     -lIrrlicht \
     -lX11 \
     -lGL \
-    -lXxf86vm
+    -lXxf86vm \
+    -lXcursor
 
 # Freetype
 INCLUDEPATH += /usr/include/freetype2
