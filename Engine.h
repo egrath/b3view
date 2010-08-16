@@ -44,6 +44,7 @@ private:
     IVideoDriver *m_Driver;
     ISceneManager *m_Scene;
     IAnimatedMeshSceneNode *m_LoadedMesh;
+    ILightSceneNode *m_SceneLight;
     CGUITTFont *m_AxisFont;
     CGUITTFace *m_AxisFontFace;
 
@@ -68,6 +69,7 @@ public:
 
     void run(); 
 	void loadMesh( const wstring &fileName );
+    void setMeshDisplayMode( bool wireframe = false, bool lighting = true );
 };
 
 #endif // ENGINE_H
