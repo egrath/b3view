@@ -58,3 +58,4 @@ This is a modernized fork by poikilos (see CHANGELOG.md).
 ## Known Issues
 * Warn on missing texture.
 * Implement Start/Stop button functionality.
+* Test and complete install.bat on Windows.
