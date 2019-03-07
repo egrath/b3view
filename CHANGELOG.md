@@ -1,14 +1,24 @@
 # Changelog
 
 ## [git] - 2019-03-06
-(first poikilos commit, based on https://github.com/egrath)
+(poikilos)
 ### Added
-(CGUITTFont methods are in CGUITTFont class unless otherwise specified)
+* created install.sh and install.bat, and added Install and Usage
+  to README.md
+* icon, install scripts, and mime type (`model/b3d`)--see README.md
+### Changed
+* The program can now start without "test.b3d" in the current working
+  directory (fixed Segmentation Fault).
+* set `TARGET = b3view` in B3View.pro, so that binary is lowercase as
+  per usual Linux naming conventions.
+
+## [git-94e3b8f] - 2019-03-06
+(poikilos)
+### Added
 * README.md
-* .gitignore (a [Qt .gitignore](https://github.com/github/gitignore/blob/master/Qt.gitignore))
 
 ### Changed
-* changed `#include <irrlicht.h>` to `#include <irrlicht/irrlicht.h>`
+(CGUITTFont methods are in CGUITTFont class unless otherwise specified)
 * fixed instances of "0 as null pointer constant" (changed to `nullptr`)
 * changed inconsistent use of spaces and tabs (changed tabs to 4 spaces)
 * (UserInterface.cpp) fixed "logical not is only applied to the left hand side of this comparison..." (put parenthesis around `event.EventType == EET_GUI_EVENT`)
@@ -27,3 +37,12 @@
 
 ### Removed
 * arial.tff removed, since it may be the "real" Arial font, which has a proprietary license
+
+## [git-d964384] - 2019-03-06
+### Changed
+(first poikilos commit, based on https://github.com/egrath)
+* changed `#include <irrlicht.h>` to `#include <irrlicht/irrlicht.h>`
+
+### Added
+* .gitignore (a [Qt .gitignore](https://github.com/github/gitignore/blob/master/Qt.gitignore))
+* CHANGELOG.md

@@ -123,7 +123,7 @@ Engine::Engine()
     m_Scene = m_Device->getSceneManager();
 
     wstringstream windowTitle;
-    windowTitle << L"Blitz3D Viewer [" << m_Driver->getName() << L"]";
+    windowTitle << L"b3view (Blitz3D/Irrlicht Viewer) [" << m_Driver->getName() << L"]";
     m_Device->setWindowCaption( windowTitle.str().c_str() );
 
     setupScene();

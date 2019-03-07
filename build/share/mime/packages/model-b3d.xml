@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="model/b3d">
+        <comment>Blitz3D Model File</comment>
+        <icon name="model-b3d"/>
+        <glob-deleteall/>
+        <glob pattern="*.b3d"/>
+    </mime-type>
+</mime-info>

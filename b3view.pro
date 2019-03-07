@@ -1,4 +1,5 @@
 CONFIG -= qt
+TARGET = b3view
 DESTDIR = build
 OBJECTS_DIR = tmp
 SOURCES += main.cpp \

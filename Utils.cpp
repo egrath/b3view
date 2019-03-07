@@ -7,6 +7,14 @@ void Utility::dumpVectorToConsole( const vector3df &vector )
 
 void Utility::dumpMeshInfoToConsole( IAnimatedMeshSceneNode *node )
 {
+    if (node == nullptr) {
+        debug() << "[MESH]: # node: nullptr" << endl;
+        return;
+    }
+    if (node->getMesh() == nullptr) {
+        debug() << "[MESH]: # node->getMesh(): nullptr" << endl;
+        return;
+    }
     // Dump some information about the mesh to the console
     IAnimatedMesh *mesh = node->getMesh();
 
