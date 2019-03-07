@@ -6,7 +6,7 @@ class Engine;
 
 #include <sstream>
 #include <string>
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 
 #include "Debug.h"
 #include "Engine.h"

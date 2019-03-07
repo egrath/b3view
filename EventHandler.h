@@ -5,7 +5,7 @@
 #include <map>
 #include <utility>
 
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 
 #include "Debug.h"
 

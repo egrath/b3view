@@ -1,7 +1,7 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 
 #include "Debug.h"
 #include "Engine.h"

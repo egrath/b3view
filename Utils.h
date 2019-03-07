@@ -2,7 +2,7 @@
 #define UTILS_H
 
 #include <cmath>
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 #include "Debug.h"
 
 using namespace irr::core;

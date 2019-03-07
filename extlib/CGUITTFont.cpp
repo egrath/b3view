@@ -1,6 +1,6 @@
 // Kudus to Nalin for this wonderful piece of code!
 // See: http://irrlicht.sourceforge.net/phpBB2/viewtopic.php?t=3995
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 using namespace irr;
 #include "CGUITTFont.h"
 

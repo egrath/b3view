@@ -8,7 +8,7 @@ class View;
 #include <string>
 #include <sstream>
 #include <iostream>
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 
 #include "EventHandler.h"
 #include "UserInterface.h"
