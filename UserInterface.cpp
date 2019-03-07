@@ -20,18 +20,18 @@ void UserInterface::setupUserInterface()
     viewMenu->addItem( L"Wireframe Mesh", UIC_VIEW_WIREFRAME, true, false, false, true );
     viewMenu->addItem( L"Lighting",UIC_VIEW_LIGHTING, true, false, true, true );
 
-    // Playback Control Window
-    dimension2d<u32> windowSize = m_Engine->m_Driver->getScreenSize();
-    IGUIWindow *playbackWindow = m_Gui->addWindow(
-            rect<s32>( vector2d<s32>( windowSize.Width - 4 - 160, 28 ), dimension2d<s32>( 160, 300 )), false, L"Playback", nullptr, UIE_PLAYBACKWINDOW );
-    playbackWindow->getCloseButton()->setVisible( false );
-    IGUIButton *playbackStartStopButton = m_Gui->addButton(
-            rect<s32>( vector2d<s32>( 4, 24 ), dimension2d<s32>( playbackWindow->getClientRect().getWidth() - 8, 24 )),
-            playbackWindow,
-            UIE_PLAYBACKSTARTSTOPBUTTON,
-            L"Start/Stop",
-            nullptr
-    );
+    // TODO: Playback Control Window
+//    dimension2d<u32> windowSize = m_Engine->m_Driver->getScreenSize();
+//    IGUIWindow *playbackWindow = m_Gui->addWindow(
+//            rect<s32>( vector2d<s32>( windowSize.Width - 4 - 160, 28 ), dimension2d<s32>( 160, 300 )), false, L"Playback", nullptr, UIE_PLAYBACKWINDOW );
+//    playbackWindow->getCloseButton()->setVisible( false );
+//    IGUIButton *playbackStartStopButton = m_Gui->addButton(
+//            rect<s32>( vector2d<s32>( 4, 24 ), dimension2d<s32>( playbackWindow->getClientRect().getWidth() - 8, 24 )),
+//            playbackWindow,
+//            UIE_PLAYBACKSTARTSTOPBUTTON,
+//            L"Start/Stop",
+//            nullptr
+//    );
 
     // Set Font for UI Elements
     m_GuiFontFace = new CGUITTFace();
@@ -46,7 +46,7 @@ void UserInterface::setupUserInterface()
         m_Gui->getSkin()->setFont( m_GuiFont );
     }
     else {
-        cerr << "ERROR: Missing '" << fontPath << "'" << endl;
+        cerr << "WARNING: Missing '" << fontPath << "'" << endl;
     }
     //}
 }
