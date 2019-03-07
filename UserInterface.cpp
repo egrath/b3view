@@ -1,14 +1,15 @@
 #include "UserInterface.h"
+#include <iostream>
 
 // PRIVATE
 void UserInterface::setupUserInterface()
 {
-	// Menu
+    // Menu
     IGUIContextMenu *menu = m_Gui->addMenu();
     menu->addItem( L"File", UIE_FILEMENU, true, true );
     menu->addItem( L"View", UIE_VIEWMENU, true, true );
 
-	// File Menu
+    // File Menu
     IGUIContextMenu *fileMenu = menu->getSubMenu( 0 );
     fileMenu->addItem( L"Load", UIC_FILE_LOAD );
     fileMenu->addItem( L"Quit", UIC_FILE_QUIT );
@@ -21,28 +22,37 @@ void UserInterface::setupUserInterface()
     // Playback Control Window
     dimension2d<u32> windowSize = m_Engine->m_Driver->getScreenSize();
     IGUIWindow *playbackWindow = m_Gui->addWindow(
-            rect<s32>( vector2d<s32>( windowSize.Width - 4 - 160, 28 ), dimension2d<s32>( 160, 300 )), false, L"Playback", 0, UIE_PLAYBACKWINDOW );
+            rect<s32>( vector2d<s32>( windowSize.Width - 4 - 160, 28 ), dimension2d<s32>( 160, 300 )), false, L"Playback", nullptr, UIE_PLAYBACKWINDOW );
     playbackWindow->getCloseButton()->setVisible( false );
     IGUIButton *playbackStartStopButton = m_Gui->addButton(
             rect<s32>( vector2d<s32>( 4, 24 ), dimension2d<s32>( playbackWindow->getClientRect().getWidth() - 8, 24 )),
             playbackWindow,
             UIE_PLAYBACKSTARTSTOPBUTTON,
             L"Start/Stop",
-            0
+            nullptr
     );
 
     // Set Font for UI Elements
     m_GuiFontFace = new CGUITTFace();
-    m_GuiFontFace->load( "arial.ttf" );
+    //irrString defines stringc as string<c8>
+    std::string fontPath = "arial.ttf";  // core::stringc has implicit conversion to io::path
+    //if (QFile(fontPath).exists()) {}
+    m_GuiFontFace->load( fontPath.c_str() ); //actually takes `const io::path &`
     m_GuiFont = new CGUITTFont( m_Gui );
-    m_GuiFont->attach( m_GuiFontFace, 14 );
-
-    m_Gui->getSkin()->setFont( m_GuiFont );
+    assert(m_GuiFontFace != nullptr);
+    if (m_GuiFontFace->face != nullptr) {
+        m_GuiFont->attach( m_GuiFontFace, 14 );
+        m_Gui->getSkin()->setFont( m_GuiFont );
+    }
+    else {
+        cerr << "ERROR: Missing '" << fontPath << "'" << endl;
+    }
+    //}
 }
 
 void UserInterface::displayLoadFileDialog()
 {
-    m_Gui->addFileOpenDialog( L"Select file to load", true, 0, UIE_LOADFILEDIALOG );
+    m_Gui->addFileOpenDialog( L"Select file to load", true, nullptr, UIE_LOADFILEDIALOG );
 }
 
 void UserInterface::handleMenuItemPressed( IGUIContextMenu *menu )
@@ -102,7 +112,7 @@ void UserInterface::drawStatusLine() const
 bool UserInterface::OnEvent( const SEvent &event )
 {
     // Events arriving here should be destined for us
-    if( ! event.EventType == EET_GUI_EVENT )
+    if( ! (event.EventType == EET_GUI_EVENT) )
         return false;
 
     const SEvent::SGUIEvent *ge = &( event.GUIEvent );

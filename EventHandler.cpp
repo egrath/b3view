@@ -15,7 +15,7 @@ EventHandler::~EventHandler()
 bool EventHandler::addEventReceiver( EventReceiverType type, IEventReceiver *receiver )
 {
     m_EventReceivers->insert( make_pair( type, receiver ));
-	return true;
+    return true;
 }
 
 // IEventReceiver

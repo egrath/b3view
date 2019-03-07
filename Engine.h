@@ -68,7 +68,7 @@ public:
     ~Engine();  
 
     void run(); 
-	void loadMesh( const wstring &fileName );
+    void loadMesh( const wstring &fileName );
     void setMeshDisplayMode( bool wireframe = false, bool lighting = true );
 };
 

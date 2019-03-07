@@ -15,7 +15,7 @@ void Engine::setupScene()
     m_Scene->setAmbientLight( SColorf( 0.2f, 0.2f, 0.2f ));
 
     // Setup Camera
-    ICameraSceneNode *camera = m_Scene->addCameraSceneNode( 0, vector3df( 0, 0, -10 ), vector3df() );
+    ICameraSceneNode *camera = m_Scene->addCameraSceneNode( nullptr, vector3df( 0, 0, -10 ), vector3df() );
     camera->setAspectRatio(( f32 ) m_Driver->getScreenSize().Width / m_Driver->getScreenSize().Height );
 }
 
@@ -110,9 +110,9 @@ s32 Engine::getNumberOfVertices()
 Engine::Engine()
 {
 #if WIN32
-    m_Device = createDevice( EDT_DIRECT3D9, dimension2d<u32>( 1024, 768 ), 32, false, false, false, 0 );
+    m_Device = createDevice( EDT_DIRECT3D9, dimension2d<u32>( 1024, 768 ), 32, false, false, false, nullptr );
 #else
-	m_Device = createDevice( EDT_OPENGL, dimension2d<u32>( 1024, 768 ), 32, false, false, false, 0 );
+    m_Device = createDevice( EDT_OPENGL, dimension2d<u32>( 1024, 768 ), 32, false, false, false, nullptr );
 #endif
     m_Device->setResizable( true );
 
@@ -122,8 +122,8 @@ Engine::Engine()
     m_Driver = m_Device->getVideoDriver();
     m_Scene = m_Device->getSceneManager();
 
-	wstringstream windowTitle;
-	windowTitle << L"Blitz3D Viewer [" << m_Driver->getName() << L"]";
+    wstringstream windowTitle;
+    windowTitle << L"Blitz3D Viewer [" << m_Driver->getName() << L"]";
     m_Device->setWindowCaption( windowTitle.str().c_str() );
 
     setupScene();
@@ -140,12 +140,14 @@ Engine::Engine()
     m_AxisFontFace = new CGUITTFace();
     m_AxisFontFace->load( "arial.ttf" );
     m_AxisFont = new CGUITTFont( m_UserInterface->getGUIEnvironment() );
+    assert(m_AxisFontFace != nullptr);
+    assert(m_AxisFontFace->face != nullptr);
     m_AxisFont->attach( m_AxisFontFace, 14 );
     m_AxisFont->AntiAlias = false;
 
     // Set Engine enabled
     m_RunEngine = true;
-    m_LoadedMesh = 0;
+    m_LoadedMesh = nullptr;
 
     // Store actual window size
     m_WindowSize = new dimension2d<u32>();
@@ -163,7 +165,7 @@ Engine::~Engine()
 
 void Engine::loadMesh( const wstring &fileName )
 {
-    if( m_LoadedMesh != 0 )
+    if( m_LoadedMesh != nullptr )
         m_LoadedMesh->remove();
 
     m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( m_Scene->getMesh( fileName.c_str() ));

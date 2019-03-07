@@ -23,7 +23,7 @@ void Utility::dumpMeshInfoToConsole( IAnimatedMeshSceneNode *node )
         // check for # textures
         int textures = 0;
         for( int ti = 0; ti < MATERIAL_MAX_TEXTURES; ti ++ )
-            if( material.getTexture( ti ) != 0 ) textures ++;
+            if( material.getTexture( ti ) != nullptr ) textures ++;
         debug() << "[MESH]:      # of textures       : " << textures << endl;
     }
 }
