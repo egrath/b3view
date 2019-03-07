@@ -15,8 +15,9 @@ shortcut_src_path="applications/$shortcut_name"
 icons_root=$PREFIX/share/pixmaps
 applications_path=$PREFIX/share/applications
 
+mimes_path="share/mime/packages"
 mime_name=model-b3d.xml
-mime_path="share/mime/packages/$mime_name"
+mime_path="$mimes_path/$mime_name"
 USER_MIMETYPES_DB_PATH=$HOME/.local/share/mime
 #USER_MIMETYPES_PATH="$USER_MIMETYPES_DB_PATH/packages"
 SYSTEM_MIMETYPES_DB_PATH=/usr/share/mime
@@ -111,6 +112,16 @@ fi
 if [ -f "$mime_path" ]; then
     # echo "Copying as '$MIMETYPES_DB_PATH/packages/$mime_name'..."
     cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
+    if [ -f "$MIMETYPES_DB_PATH/packages/$mime_name" ]; then
+        echo "Successfully copied '$MIMETYPES_DB_PATH/packages/$mime_name'"
+    fi
+    mime_name=model-x.xml
+    mime_path="$mimes_path/$mime_name"
+    cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
+    if [ -f "$MIMETYPES_DB_PATH/packages/$mime_name" ]; then
+        echo "Successfully copied '$MIMETYPES_DB_PATH/packages/$mime_name'"
+    fi
+
     echo "Updating mime type database '$MIMETYPES_DB_PATH'..."
     update-mime-database "$MIMETYPES_DB_PATH"  # must contain packages
 else

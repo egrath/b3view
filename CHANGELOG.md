@@ -6,6 +6,7 @@
 * created install.sh and install.bat, and added Install and Usage
   to README.md
 * icon, install scripts, and mime type (`model/b3d`)--see README.md
+* mime type (`model/x`)
 ### Changed
 * The program can now start without "test.b3d" in the current working
   directory (fixed Segmentation Fault).

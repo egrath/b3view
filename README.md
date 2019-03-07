@@ -1,5 +1,6 @@
 # b3view
-View B3D files (and possibly other files supported by Irrlicht).
+View B3D or X files (and possibly other files supported by Irrlicht)
+with double-click if this program is associated with the file types.
 
 This is a modernized fork by poikilos (see CHANGELOG.md).
 
