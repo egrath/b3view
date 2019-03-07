@@ -38,6 +38,7 @@ class Engine
 {
     friend class UserInterface;
     friend class View;
+    wstring previousMeshPath;
 
 private:
     IrrlichtDevice *m_Device;
@@ -67,8 +68,9 @@ public:
     Engine();
     ~Engine();  
 
-    void run(); 
+    void run();
     void loadMesh( const wstring &fileName );
+    void loadTexture( const wstring &fileName );
     void setMeshDisplayMode( bool wireframe = false, bool lighting = true );
 };
 

@@ -27,15 +27,17 @@ enum UserInterfaceElements
     UIE_LOADFILEDIALOG              = 1002,
     UIE_FILEMENU                    = 1003,
     UIE_PLAYBACKSTARTSTOPBUTTON     = 1004,
-    UIE_VIEWMENU                    = 1005
+    UIE_VIEWMENU                    = 1005,
+    UIE_LOADTEXTUREDIALOG           = 1006
 };
 
 enum UserInterfaceCommands
 {
-    UIC_FILE_LOAD       = 1000,
-    UIC_FILE_QUIT       = 1001,
-    UIC_VIEW_WIREFRAME  = 2000,
-    UIC_VIEW_LIGHTING   = 2001
+    UIC_FILE_LOAD           = 1000,
+    UIC_FILE_QUIT           = 1001,
+    UIC_FILE_LOAD_TEXTURE   = 1002,
+    UIC_VIEW_WIREFRAME      = 2000,
+    UIC_VIEW_LIGHTING       = 2001
 };
 
 class UserInterface : public IEventReceiver
@@ -48,6 +50,7 @@ private:
 
     void setupUserInterface();
     void displayLoadFileDialog();
+    void displayLoadTextureDialog();
     void handleMenuItemPressed( IGUIContextMenu *menu );
 
     bool m_WireframeDisplay;

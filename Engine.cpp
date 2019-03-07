@@ -109,6 +109,7 @@ s32 Engine::getNumberOfVertices()
 
 Engine::Engine()
 {
+    this->previousMeshPath = L"";
 #if WIN32
     m_Device = createDevice( EDT_DIRECT3D9, dimension2d<u32>( 1024, 768 ), 32, false, false, false, nullptr );
 #else
@@ -168,8 +169,19 @@ void Engine::loadMesh( const wstring &fileName )
     if( m_LoadedMesh != nullptr )
         m_LoadedMesh->remove();
 
-    m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( m_Scene->getMesh( fileName.c_str() ));
+    m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( m_Scene->getMesh( fileName.c_str()));
+    if (m_LoadedMesh != nullptr) {
+        this->previousMeshPath = fileName;
+    }
     Utility::dumpMeshInfoToConsole( m_LoadedMesh );
+}
+
+void Engine::loadTexture(const wstring &fileName)
+{
+    //TODO: eliminate this?
+    //if (previousMeshPath.length() > 0)
+        //m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( m_Scene->getMesh(previousMeshPath.c_str()));
+    m_LoadedMesh->setMaterialTexture(0, this->m_Driver->getTexture(fileName.c_str()));
 }
 
 void Engine::setMeshDisplayMode( bool wireframe, bool lighting )

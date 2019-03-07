@@ -12,6 +12,7 @@ void UserInterface::setupUserInterface()
     // File Menu
     IGUIContextMenu *fileMenu = menu->getSubMenu( 0 );
     fileMenu->addItem( L"Load", UIC_FILE_LOAD );
+    fileMenu->addItem( L"LoadTexture", UIC_FILE_LOAD_TEXTURE );
     fileMenu->addItem( L"Quit", UIC_FILE_QUIT );
 
     // View Menu
@@ -55,6 +56,11 @@ void UserInterface::displayLoadFileDialog()
     m_Gui->addFileOpenDialog( L"Select file to load", true, nullptr, UIE_LOADFILEDIALOG );
 }
 
+void UserInterface::displayLoadTextureDialog()
+{
+    m_Gui->addFileOpenDialog( L"Select file to load", true, nullptr, UIE_LOADTEXTUREDIALOG );
+}
+
 void UserInterface::handleMenuItemPressed( IGUIContextMenu *menu )
 {
     s32 id = menu->getItemCommandId( menu->getSelectedItem() );
@@ -63,6 +69,10 @@ void UserInterface::handleMenuItemPressed( IGUIContextMenu *menu )
     {
     case UIC_FILE_LOAD:
         displayLoadFileDialog();
+        break;
+
+    case UIC_FILE_LOAD_TEXTURE:
+        displayLoadTextureDialog();
         break;
 
     case UIC_FILE_QUIT:
@@ -130,6 +140,14 @@ bool UserInterface::OnEvent( const SEvent &event )
         {
             IGUIFileOpenDialog *fileOpenDialog = static_cast<IGUIFileOpenDialog *>( ge->Caller );
             m_Engine->loadMesh( fileOpenDialog->getFileName() );
+        }
+        break;
+
+    case UIE_LOADTEXTUREDIALOG:
+        if( ge->EventType == EGET_FILE_SELECTED )
+        {
+            IGUIFileOpenDialog *fileOpenDialog = static_cast<IGUIFileOpenDialog *>( ge->Caller );
+            m_Engine->loadTexture( fileOpenDialog->getFileName() );
         }
         break;
 
