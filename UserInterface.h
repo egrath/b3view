@@ -13,13 +13,6 @@ class Engine;
 
 #include "extlib/CGUITTFont.h"
 
-using namespace irr;
-using namespace irr::core;
-using namespace irr::gui;
-
-using std::string;
-using std::wstring;
-
 enum UserInterfaceElements
 {
     UIE_PLAYBACKWINDOW              = 1000,
@@ -40,18 +33,18 @@ enum UserInterfaceCommands
     UIC_VIEW_LIGHTING       = 2001
 };
 
-class UserInterface : public IEventReceiver
+class UserInterface : public irr::IEventReceiver
 {
 private:
     Engine *m_Engine;
-    IGUIEnvironment *m_Gui;
-    CGUITTFont *m_GuiFont;
-    CGUITTFace *m_GuiFontFace;
+    irr::gui::IGUIEnvironment *m_Gui;
+    irr::gui::CGUITTFont *m_GuiFont;
+    irr::gui::CGUITTFace *m_GuiFontFace;
 
     void setupUserInterface();
     void displayLoadFileDialog();
     void displayLoadTextureDialog();
-    void handleMenuItemPressed( IGUIContextMenu *menu );
+    void handleMenuItemPressed(irr::gui::IGUIContextMenu *menu);
 
     bool m_WireframeDisplay;
     bool m_Lighting;
@@ -59,11 +52,11 @@ private:
 public:
     UserInterface( Engine *device );
     ~UserInterface();
-    IGUIEnvironment * getGUIEnvironment() const;
+    irr::gui::IGUIEnvironment *getGUIEnvironment() const;
     void drawStatusLine() const;
 
     // IEventReceiver
-    virtual bool OnEvent( const SEvent &event );
+    virtual bool OnEvent( const irr::SEvent &event );
 };
 
 #endif // USERINTERFACE_H

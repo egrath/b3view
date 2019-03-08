@@ -14,10 +14,6 @@ using std::endl;
 using std::map;
 using std::make_pair;
 
-using namespace irr;
-using namespace irr::video;
-using namespace irr::gui;
-
 enum EventReceiverType
 {
     ERT_USERINTERFACE = 1,
@@ -29,20 +25,23 @@ enum UserEventIdentifier
     UEI_WINDOWSIZECHANGED = 1
 };
 
-class EventHandler : public IEventReceiver
+class EventHandler : public irr::IEventReceiver
 {
 private:
-    IrrlichtDevice *m_Device;
+    irr::IrrlichtDevice *m_Device;
     map<EventReceiverType, IEventReceiver*> *m_EventReceivers;
-
+    bool KeyIsDown[irr::KEY_KEY_CODES_COUNT];
+    irr::s32 keyState[irr::KEY_KEY_CODES_COUNT];
+    irr::s32 LMouseState,RMouseState;
 public:
-    EventHandler( IrrlichtDevice *device );
+    EventHandler( irr::IrrlichtDevice *device );
     ~EventHandler();
 
-    bool addEventReceiver( EventReceiverType type, IEventReceiver *receiver );
+    bool addEventReceiver(EventReceiverType type, irr::IEventReceiver *receiver );
 
     // IEventReceiver
-    virtual bool OnEvent( const SEvent &event );
+    virtual bool OnEvent( const irr::SEvent &event );
+    std::wstring m_PreviousPath;
 };
 
 #endif // EVENTHANDLER_H

@@ -87,18 +87,21 @@ fi
 if [ ! -d "$applications_path" ]; then
     mkdir -p "$applications_path"
 fi
-if [ "@$PROFILE_ENABLE" = "@true" ]; then
-    if [ -f "$shortcut_src_path" ]; then
-	cat "$shortcut_src_path" | grep -v Exec= | grep -v Icon= > "$applications_path/$shortcut_name"
-	echo "Exec=$dest_bin_dir/$project_unix_name" >> "$applications_path/$shortcut_name"
-	echo "Icon=$icons_root/$icon_name" >> "$applications_path/$shortcut_name"
-	echo >> "$applications_path/$shortcut_name"
-    else
-	echo "ERROR: No icon installed since missing '$shortcut_src_path'"
-    fi
+
+#if [ "@$PROFILE_ENABLE" = "@true" ]; then
+# always rewrite, since PREFIX may differ
+if [ -f "$shortcut_src_path" ]; then
+    cat "$shortcut_src_path" | grep -v Exec= | grep -v Icon= > "$applications_path/$shortcut_name"
+    echo "Exec=$dest_bin_dir/$project_unix_name" >> "$applications_path/$shortcut_name"
+    echo "Icon=$icons_root/$icon_name" >> "$applications_path/$shortcut_name"
+    echo >> "$applications_path/$shortcut_name"
 else
-    cp -f "$shortcut_src_path" "$applications_path/"
+    echo "ERROR: No icon installed since missing '$shortcut_src_path'"
 fi
+#else
+    #cp -f "$shortcut_src_path" "$applications_path/"
+#fi
+
 if [ -f "$applications_path/$shortcut_name" ]; then
     echo "Successfully copied '$applications_path/$shortcut_name'"
 else

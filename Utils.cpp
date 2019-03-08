@@ -1,4 +1,9 @@
 #include "Utils.h"
+using namespace irr::core;
+using namespace irr::scene;
+using namespace irr::video;
+using namespace std;
+
 
 void Utility::dumpVectorToConsole( const vector3df &vector )
 {
@@ -34,6 +39,24 @@ void Utility::dumpMeshInfoToConsole( IAnimatedMeshSceneNode *node )
             if( material.getTexture( ti ) != nullptr ) textures ++;
         debug() << "[MESH]:      # of textures       : " << textures << endl;
     }
+}
+
+std::wstring Utility::parentOfPath(const wstring &path)
+{
+    std::wstring ret = L".";
+    if (path == L".") {
+        ret = L"..";
+    }
+    else {
+        std::wstring::size_type lastSlashPos = path.find_last_of(L"/");
+        if (lastSlashPos == std::wstring::npos) {
+            std::wstring::size_type lastSlashPos = path.find_last_of(L"\\");
+        }
+        if (lastSlashPos != std::wstring::npos) {
+            ret = path.substr(0, lastSlashPos);
+        }
+    }
+    return ret;
 }
 
 

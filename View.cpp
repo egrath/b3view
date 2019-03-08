@@ -1,5 +1,9 @@
 #include "View.h"
 
+using namespace irr;
+using namespace irr::core;
+using namespace irr::scene;
+
 void View::setNewCameraPosition()
 {
     vector3d<f32> newCameraPosition;

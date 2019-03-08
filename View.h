@@ -7,28 +7,25 @@
 #include "Engine.h"
 #include "Utils.h"
 
-using namespace irr;
-using namespace irr::scene;
-using namespace irr::core;
-using namespace irr::video;
 
-class View : public IEventReceiver
+
+class View : public irr::IEventReceiver
 {
 private:
     Engine *m_Engine;
-    f32 m_Yaw, m_Pitch, m_CameraDistance;
-    vector2d<int> *m_LastMousePosition;
+    irr::f32 m_Yaw, m_Pitch, m_CameraDistance;
+    irr::core::vector2d<int> *m_LastMousePosition;
     bool m_RotMouse;
 
     void setNewCameraPosition();
-    void setNewLightDirection( const vector3df &cameraPosition );
+    void setNewLightDirection( const irr::core::vector3df &cameraPosition );
 
 public:
     View( Engine *engine );
     ~View();
 
     // IEventReceiver
-    virtual bool OnEvent( const SEvent &event );
+    virtual bool OnEvent( const irr::SEvent &event );
 };
 
-#endif // VIEW_H
+#endif  // VIEW_H

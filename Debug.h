@@ -4,12 +4,7 @@
 #include <iostream>
 #include <cassert>
 
-using std::cout;
-using std::endl;
-using std::ostream;
-using std::wcout;
-using std::wcerr;
 
-ostream & debug();
+std::ostream & debug();
 
 #endif // DEBUG_H

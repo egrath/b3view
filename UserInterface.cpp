@@ -1,6 +1,13 @@
 #include "UserInterface.h"
 #include <iostream>
 
+using namespace irr;
+using namespace irr::core;
+using namespace irr::gui;
+
+using std::string;
+using std::wstring;
+
 // PRIVATE
 void UserInterface::setupUserInterface()
 {
@@ -35,18 +42,21 @@ void UserInterface::setupUserInterface()
 
     // Set Font for UI Elements
     m_GuiFontFace = new CGUITTFace();
-    //irrString defines stringc as string<c8>
-    std::string fontPath = "arial.ttf";  // core::stringc has implicit conversion to io::path
-    //if (QFile(fontPath).exists()) {}
-    m_GuiFontFace->load( fontPath.c_str() ); //actually takes `const io::path &`
-    m_GuiFont = new CGUITTFont( m_Gui );
-    assert(m_GuiFontFace != nullptr);
-    if (m_GuiFontFace->face != nullptr) {
+    // irrString defines stringc as string<c8>
+    std::wstring fontPath = L"ClearSansRegular.ttf";  // core::stringc has implicit conversion to io::path
+    // if (QFile(fontPath).exists()) {}
+    if (m_GuiFontFace->load(fontPath.c_str())) {  // actually takes `const io::path &`
+        m_GuiFont = new CGUITTFont( m_Gui );
         m_GuiFont->attach( m_GuiFontFace, 14 );
         m_Gui->getSkin()->setFont( m_GuiFont );
     }
     else {
-        cerr << "WARNING: Missing '" << fontPath << "'" << endl;
+        std::wcerr << L"WARNING: Missing '" << fontPath << L"'" << endl;
+        delete m_GuiFontFace;
+        m_GuiFontFace = nullptr;
+        if (m_GuiFont != nullptr) {
+            std::wcerr << L"WARNING: Keeping old font loaded." << endl;
+        }
     }
     //}
 }
@@ -122,7 +132,7 @@ void UserInterface::drawStatusLine() const
 bool UserInterface::OnEvent( const SEvent &event )
 {
     // Events arriving here should be destined for us
-    if( ! (event.EventType == EET_GUI_EVENT) )
+    if (!(event.EventType == EET_GUI_EVENT))
         return false;
 
     const SEvent::SGUIEvent *ge = &( event.GUIEvent );

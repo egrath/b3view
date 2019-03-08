@@ -1,5 +1,16 @@
 #include "Engine.h"
 
+using std::cout;
+using std::endl;
+using std::wstring;
+using std::wstringstream;
+
+using namespace irr;
+using namespace irr::core;
+using namespace irr::scene;
+using namespace irr::video;
+using namespace irr::gui;
+
 /* //////////////////////////////////////////////////////////////////////////
    PRIVATE METHODS
    /////////////////////////////////////////////////////////////////////// */
@@ -42,21 +53,25 @@ void Engine::drawAxisLines()
     m_Driver->setMaterial( *lineX );
     m_Driver->draw3DLine( vector3df(), vector3df( 5, 0, 0 ), SColor( 255, 255, 0, 0 ));
     position2d<s32> textPos = m_Scene->getSceneCollisionManager()->getScreenCoordinatesFrom3DPosition( vector3df( 5.2, 0, 0 ));
-    dimension2d<u32> textSize = m_AxisFont->getDimension( L"X+" );
-    m_AxisFont->draw( L"X+", rect<s32>( textPos, textSize ), SColor( 255, 255, 0, 0 ), true, true );
-
+    dimension2d<u32> textSize;
+    if (m_AxisFont != nullptr) {
+        textSize = m_AxisFont->getDimension( L"X+" );
+        m_AxisFont->draw( L"X+", rect<s32>( textPos, textSize ), SColor( 255, 255, 0, 0 ), true, true );
+    }
     m_Driver->setMaterial( *lineY );
     m_Driver->draw3DLine( vector3df(), vector3df( 0, 5, 0 ), SColor( 255, 0, 255, 0 ));
     textPos = m_Scene->getSceneCollisionManager()->getScreenCoordinatesFrom3DPosition( vector3df( 0, 5.2, 0 ));
-    textSize = m_AxisFont->getDimension( L"Y+" );
-    m_AxisFont->draw( L"Y+", rect<s32>( textPos, textSize ), SColor( 255, 0, 255, 0 ), true, true );
-
+    if (m_AxisFont != nullptr) {
+        textSize = m_AxisFont->getDimension( L"Y+" );
+        m_AxisFont->draw( L"Y+", rect<s32>( textPos, textSize ), SColor( 255, 0, 255, 0 ), true, true );
+    }
     m_Driver->setMaterial( *lineZ );
     m_Driver->draw3DLine( vector3df(), vector3df( 0, 0, 5 ), SColor( 255, 0, 0, 255 ));
     textPos = m_Scene->getSceneCollisionManager()->getScreenCoordinatesFrom3DPosition( vector3df( 0, 0, 5.2 ));
-    textSize = m_AxisFont->getDimension( L"Z+" );
-    m_AxisFont->draw( L"Z+", rect<s32>( textPos, textSize ), SColor( 255, 0, 0, 255 ), true, true );
-
+    if (m_AxisFont != nullptr) {
+        textSize = m_AxisFont->getDimension( L"Z+" );
+        m_AxisFont->draw( L"Z+", rect<s32>( textPos, textSize ), SColor( 255, 0, 0, 255 ), true, true );
+    }
     delete lineX;
     delete lineY;
     delete lineZ;
@@ -109,7 +124,6 @@ s32 Engine::getNumberOfVertices()
 
 Engine::Engine()
 {
-    this->previousMeshPath = L"";
 #if WIN32
     m_Device = createDevice( EDT_DIRECT3D9, dimension2d<u32>( 1024, 768 ), 32, false, false, false, nullptr );
 #else
@@ -139,13 +153,15 @@ Engine::Engine()
 
     // Load font for displaying Axis names
     m_AxisFontFace = new CGUITTFace();
-    m_AxisFontFace->load( "arial.ttf" );
-    m_AxisFont = new CGUITTFont( m_UserInterface->getGUIEnvironment() );
-    assert(m_AxisFontFace != nullptr);
-    assert(m_AxisFontFace->face != nullptr);
-    m_AxisFont->attach( m_AxisFontFace, 14 );
-    m_AxisFont->AntiAlias = false;
-
+    if (m_AxisFontFace->load( "ClearSansRegular.ttf" )) {
+        m_AxisFont = new CGUITTFont( m_UserInterface->getGUIEnvironment() );
+        m_AxisFont->attach( m_AxisFontFace, 14 );
+        m_AxisFont->AntiAlias = false;
+    }
+    else {
+        delete m_AxisFontFace;
+        m_AxisFontFace = nullptr;
+    }
     // Set Engine enabled
     m_RunEngine = true;
     m_LoadedMesh = nullptr;
@@ -166,21 +182,31 @@ Engine::~Engine()
 
 void Engine::loadMesh( const wstring &fileName )
 {
+    // if (m_LoadedMesh != nullptr) {
+    //std::wstring fn;
+    //fn.assign(fileName.c_str());
+    // std::wcerr << "fileName = " << fn << endl;
+    // std::wcerr << "fileName = " << fileName << endl;
+    this->m_EventHandler->m_PreviousPath = fileName;
+    // std::wcerr << "this->m_EventHandler->m_PreviousPath = " << this->m_EventHandler->m_PreviousPath.c_str() << endl;
+    // }
     if( m_LoadedMesh != nullptr )
         m_LoadedMesh->remove();
 
     m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( m_Scene->getMesh( fileName.c_str()));
-    if (m_LoadedMesh != nullptr) {
-        this->previousMeshPath = fileName;
-    }
     Utility::dumpMeshInfoToConsole( m_LoadedMesh );
+}
+
+void Engine::reloadMesh()
+{
+    if (this->m_EventHandler->m_PreviousPath.length() > 0) {
+        std::wcerr << "this->m_EventHandler->m_PreviousPath = " << this->m_EventHandler->m_PreviousPath.c_str() << endl;
+        loadMesh(this->m_EventHandler->m_PreviousPath);
+    }
 }
 
 void Engine::loadTexture(const wstring &fileName)
 {
-    //TODO: eliminate this?
-    //if (previousMeshPath.length() > 0)
-        //m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( m_Scene->getMesh(previousMeshPath.c_str()));
     m_LoadedMesh->setMaterialTexture(0, this->m_Driver->getTexture(fileName.c_str()));
 }
 

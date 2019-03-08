@@ -1,9 +1,14 @@
 // Kudus to Nalin for this wonderful piece of code!
 // See: http://irrlicht.sourceforge.net/phpBB2/viewtopic.php?t=3995
+#include <assert.h>
+#include <iostream>
+
+
 #include <irrlicht/irrlicht.h>
 using namespace irr;
 #include "CGUITTFont.h"
-#include <assert.h>
+
+using namespace std;
 
 namespace irr
 {
@@ -13,6 +18,7 @@ namespace gui
 FT_Library library;
 bool CGUITTFace::libraryLoaded = false;
 s32 facesCount = 0;
+
 
 //////////////////////
 
@@ -308,22 +314,21 @@ CGUITTFont::~CGUITTFont()
 
 bool CGUITTFont::attach(CGUITTFace *face, u32 size, bool size_is_pixels)
 {
-    if (!Driver)
-        return false;
-    if (tt_face == nullptr) {
+    if (!Driver) {
+        cerr << "ERROR: tried to attach font Face but there is no Driver" << endl;
         return false;
     }
-    if (tt_face == nullptr || tt_face->face == nullptr) {
+    if (face == nullptr) {
+        cerr << "ERROR: tried to attach null tt_face" << endl;
         return false;
     }
     if (face->face == nullptr) {
+        cerr << "ERROR: tried to attach null tt_face->face" << endl;
         return false;
     }
 
     tt_face = face;
 
-    assert(tt_face != nullptr);
-    assert(tt_face->face != nullptr);
     if (tt_face->face->num_glyphs > 0) {
         Glyphs.reallocate(tt_face->face->num_glyphs);
         Glyphs.set_used(tt_face->face->num_glyphs);

@@ -4,6 +4,11 @@
 
 #include "Engine.h"
 
+using std::wstring;
+
+using namespace irr;
+using namespace irr::core;
+
 wchar_t * getWideCharString( char *str );
 
 #ifdef WIN32

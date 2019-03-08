@@ -16,17 +16,6 @@ class View;
 
 #include "extlib/CGUITTFont.h"
 
-using std::cout;
-using std::endl;
-using std::wstring;
-using std::wstringstream;
-
-using namespace irr;
-using namespace irr::core;
-using namespace irr::scene;
-using namespace irr::video;
-using namespace irr::gui;
-
 enum SceneItemID
 {
     SIID_LIGHT      = 1,
@@ -38,18 +27,17 @@ class Engine
 {
     friend class UserInterface;
     friend class View;
-    wstring previousMeshPath;
 
 private:
-    IrrlichtDevice *m_Device;
-    IVideoDriver *m_Driver;
-    ISceneManager *m_Scene;
-    IAnimatedMeshSceneNode *m_LoadedMesh;
-    ILightSceneNode *m_SceneLight;
-    CGUITTFont *m_AxisFont;
-    CGUITTFace *m_AxisFontFace;
+    irr::IrrlichtDevice *m_Device;
+    irr::video::IVideoDriver *m_Driver;
+    irr::scene::ISceneManager *m_Scene;
+    irr::scene::IAnimatedMeshSceneNode *m_LoadedMesh;
+    irr::scene::ILightSceneNode *m_SceneLight;
+    irr::gui::CGUITTFont *m_AxisFont;
+    irr::gui::CGUITTFace *m_AxisFontFace;
 
-    dimension2d<u32> *m_WindowSize;
+    irr::core::dimension2d<irr::u32> *m_WindowSize;
 
     bool m_RunEngine;
 
@@ -61,16 +49,17 @@ private:
     void drawAxisLines();
     void drawBackground();
     void checkResize();
-    IGUIEnvironment *getGUIEnvironment() const;    
-    s32 getNumberOfVertices();
+    irr::gui::IGUIEnvironment *getGUIEnvironment() const;
+    irr::s32 getNumberOfVertices();
 
 public:
     Engine();
     ~Engine();  
 
     void run();
-    void loadMesh( const wstring &fileName );
-    void loadTexture( const wstring &fileName );
+    void loadMesh( const std::wstring &fileName );
+    void reloadMesh();
+    void loadTexture( const std::wstring &fileName );
     void setMeshDisplayMode( bool wireframe = false, bool lighting = true );
 };
 

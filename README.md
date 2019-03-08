@@ -14,9 +14,9 @@ This is a modernized fork by poikilos (see CHANGELOG.md).
   [filehandoff#compiling-issues](https://github.com/poikilos/filehandoff#compiling-issues))
 * Copy all of the files from `./build` to your actual build directory,
   if your build directory is not `./build`
-* Copy your favorite font to `./build/arial.tff` _(Arial is not included
-  due it possibly being the "real" Arial, which has a proprietary
-  license)_.
+* (optional) Copy your favorite public-licensed font over
+  `./build/ClearSansRegular.tff` or to current working directory of
+  program
 
 ## Installation
 ### Windows
@@ -60,3 +60,19 @@ This is a modernized fork by poikilos (see CHANGELOG.md).
 * Warn on missing texture.
 * Implement Start/Stop button functionality.
 * Test and complete install.bat on Windows.
+
+## Authors
+* ClearSansRegular.ttf (Apache 2.0 License) by Intel
+  <https://01.org/clear-sans> via
+  <https://www.fontsquirrel.com/fonts/clear-sans>
+* ninja.b3d, nskin*.jpg by Psionic (psionic3d.co.uk)
+  <http://www.psionic3d.co.uk/downloads/ninja.zip>
+  (I've seen this file ripped and in several repos, but finally found
+  the original site above, which has additional skins not found
+  elsewhere, via included "ninja animation ranges.txt" from
+  <https://sledjhamr.org/source/media/Irrlicht/>)
+  "Feel free to use however you like, commercial etc, credits are
+  Appreciated..." -Psionic
+* Until original author egrath responds, all files not mentioned above
+  are licensed under the GitHub ToS (GitHub has rights to distribute
+  the files).
