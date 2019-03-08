@@ -1,5 +1,8 @@
 #include "UserInterface.h"
+#include <string>
 #include <iostream>
+//#include <filesystem>
+#include <experimental/filesystem>
 
 using namespace irr;
 using namespace irr::core;
@@ -7,6 +10,12 @@ using namespace irr::gui;
 
 using std::string;
 using std::wstring;
+using namespace std;
+
+// C++14: namespace filesystem = std::experimental::filesystem;
+// namespace fs = std::filesystem;  // doesn't work (not a namespace in gcc's C++17)
+// using namespace std::filesystem;  // doesn't work (not a namespace in gcc's C++17)
+namespace fs = std::experimental::filesystem;
 
 // PRIVATE
 void UserInterface::setupUserInterface()
@@ -159,6 +168,81 @@ void UserInterface::drawStatusLine() const
 {
 }
 
+bool UserInterface::loadNextTexture(int direction)
+{
+    bool ret = false;
+    this->m_Engine->m_NextPath = L"";
+    std::wstring basePath = L".";
+    if (this->m_Engine->m_PreviousPath.length() > 0) {
+        // std::wcerr << "this->m_PreviousPath: " <<  this->m_PreviousPath.c_str() << endl;
+        std::wstring lastName = Utility::basename(this->m_Engine->m_PreviousPath);
+        std::wstring lastDirPath = Utility::parentOfPath(this->m_Engine->m_PreviousPath);
+        // std::wcerr << "lastDirPath: " <<  lastDirPath << endl;
+        std::wstring parentPath = Utility::parentOfPath(lastDirPath);
+        // std::wcerr << "parentPath: " <<  parentPath << endl;
+        std::wstring dirSeparator = Utility::delimiter(this->m_Engine->m_PreviousPath);
+        std::wstring texturesPath = parentPath + dirSeparator + L"textures";
+        // std::wcerr << "lastName: " <<  lastName << endl;
+        // std::wcerr << "pathWithoutExt: " <<  Utility::withoutExtension(m_PreviousPath) << endl;
+        //std::wcerr << "nameWithoutExt: " <<  Utility::withoutExtension(lastName) << endl;
+        std::wstring tryTexPath = texturesPath + dirSeparator + Utility::withoutExtension(lastName) + L".png";
+        std::wcerr << "tryTexPath: " << tryTexPath << endl;
+        if (direction==0 && Utility::isFile(tryTexPath)) {
+            std::wcerr << "is file: " << tryTexPath << endl;
+            this->m_Engine->m_NextPath = tryTexPath;
+            this->m_Engine->loadTexture(this->m_Engine->m_NextPath);
+        }
+        else {
+            tryTexPath = lastDirPath + dirSeparator + Utility::withoutExtension(lastName) + L".png";
+            // std::wcerr << "alternate tryTexPath: " << tryTexPath << endl;
+            if (direction==0 && Utility::isFile(tryTexPath)) {
+                std::wcerr << "is file: " << tryTexPath << endl;
+                this->m_Engine->m_NextPath = tryTexPath;
+                ret = this->m_Engine->loadTexture(this->m_Engine->m_NextPath);
+            }
+            else {
+                //wcerr << L"converting path " << texturesPath << endl;
+                //std::string path = Utility::toString(texturesPath);
+                std::wstring path = texturesPath;
+
+                //cerr << "looking for next texture in " << path << endl;
+                wcerr << "looking for next texture in " << path << endl;
+
+                fs::directory_iterator end_itr; // default construction yields past-the-end
+
+                std::wstring nextPath = L"";
+                std::wstring retroPath = L"";
+                std::wstring lastPath = L"";
+                //std::string nextPath = "";
+
+                bool found = false;
+                //for (directory_iterator itr(path); itr != end_itr; ++itr) {
+                for (const auto & itr : fs::directory_iterator(texturesPath)) {
+                    // std::cout << entry.path() << std::endl;
+                    if (!is_directory(itr.status())) {
+                    //if (!itr.is_directory()) {
+                        // cycle through files (go to next after m_PrevTexturePath
+                        // if any, otherwise first)
+                        if (nextPath.length() == 0) nextPath  = itr.path().wstring();
+                        lastPath = itr.path().wstring();
+                        if (found) {
+                            nextPath = itr.path().wstring();
+                            break;
+                        }
+                        if (itr.path().wstring()==this->m_Engine->m_PrevTexturePath) found = true;
+                        if (!found) retroPath = itr.path().wstring();
+                    }
+                }
+                if (retroPath.length()==0) retroPath = lastPath;  // previous is last if at beginning
+                if (direction < 0) nextPath = retroPath;
+                if (nextPath.length() > 0) ret = this->m_Engine->loadTexture(nextPath);
+                wcerr << "chose texture '" << nextPath << "': " << (ret?"OK":"FAIL") << endl;
+            }
+        }
+    }
+    else debug() <<  "Can't cycle texture since no file was opened" << endl;
+}
+
 // IEventReceiver
 bool UserInterface::OnEvent( const SEvent &event )
 {
@@ -166,27 +250,10 @@ bool UserInterface::OnEvent( const SEvent &event )
     if (event.EventType == EET_KEY_INPUT_EVENT) {
         if (event.KeyInput.PressedDown && !KeyIsDown[event.KeyInput.Key]) {
             if (event.KeyInput.Key == irr::KEY_KEY_T) {
-                this->m_Engine->m_NextPath = L"";
-                std::wstring basePath = L".";
-                if (this->m_Engine->m_PreviousPath.length() > 0) {
-                    // std::wcerr << "this->m_PreviousPath: " <<  this->m_PreviousPath.c_str() << endl;
-                    std::wstring lastName = Utility::basename(this->m_Engine->m_PreviousPath);
-                    std::wstring lastDirPath = Utility::parentOfPath(this->m_Engine->m_PreviousPath);
-                    // std::wcerr << "lastDirPath: " <<  lastDirPath << endl;
-                    std::wstring parentPath = Utility::parentOfPath(lastDirPath);
-                    // std::wcerr << "parentPath: " <<  parentPath << endl;
-                    std::wstring dirSeparator = Utility::delimiter(this->m_Engine->m_PreviousPath);
-                    std::wstring texturesPath = parentPath + dirSeparator + L"textures";
-                    // std::wcerr << "lastName: " <<  lastName << endl;
-                    // std::wcerr << "pathWithoutExt: " <<  Utility::withoutExtension(m_PreviousPath) << endl;
-                    // std::wcerr << "nameWithoutExt: " <<  Utility::withoutExtension(lastName) << endl;
-                    std::wstring tryTexPath = texturesPath + dirSeparator + Utility::withoutExtension(lastName) + L".png";
-                    if (Utility::exists(tryTexPath)) {
-                        this->m_Engine->m_NextPath = tryTexPath;
-                        this->m_Engine->loadTexture(this->m_Engine->m_NextPath);
-                    }
-                }
-                else debug() <<  "Can't cycle texture since no file was opened" << endl;
+                loadNextTexture(1);
+            }
+            else if (event.KeyInput.Key == irr::KEY_KEY_E) {
+                loadNextTexture(-1);
             }
             else if (event.KeyInput.Char == L'+' || event.KeyInput.Char == L'=') {
                 m_Engine->setAnimationFPS(m_Engine->animationFPS() + 5);
@@ -242,10 +309,6 @@ bool UserInterface::OnEvent( const SEvent &event )
         return false;
 
     const SEvent::SGUIEvent *ge = &( event.GUIEvent );
-
-    bool isPress = false;
-
-
 
     switch( ge->Caller->getID() )
     {

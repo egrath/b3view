@@ -64,6 +64,7 @@ public:
     ~UserInterface();
     irr::gui::IGUIEnvironment *getGUIEnvironment() const;
     void drawStatusLine() const;
+    bool loadNextTexture(int direction);
 
     // IEventReceiver
     virtual bool OnEvent( const irr::SEvent &event );

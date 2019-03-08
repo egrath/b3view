@@ -14,8 +14,8 @@ public:
     static std::wstring basename(const std::wstring &path);
     static std::wstring withoutExtension(const std::wstring &path);
     static std::wstring delimiter(const std::wstring &path);
-    static bool exists(const std::string &name);
-    static bool exists(const std::wstring &name);
+    static bool isFile(const std::string &name);
+    static bool isFile(const std::wstring &name);
     static std::string toString(const std::wstring &name);
 };
 

@@ -13,6 +13,7 @@
 * icon, install scripts, and mime type (`model/b3d`)--see README.md
 * mime type (`model/x`)
 * added ClearSansRegular.ttf
+* hotkeys to cycle ../textures/*
 
 ### Changed
 * The program can now start without "test.b3d" in the current working

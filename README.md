@@ -1,13 +1,17 @@
 # b3view
-View B3D or X files (and possibly other files supported by Irrlicht)
+View B3D, X, OBJ files (and possibly other files supported by Irrlicht)
 with double-click if this program is associated with the file types.
 
 This is a modernized fork by poikilos (see CHANGELOG.md).
 
 ## Compiling
+* You may need gcc 8.2.1 or higher (C++17 filesystem works on 8.2.1
+  for sure)
 * Make sure you have the Irrlicht and Qt development packages
   (such as via `sudo dnf -y install qt-devel qt-creator irrlicht-devel`
   on Fedora 29)
+  - Qt is not actually used, only Qt creator (the `CONFIG -= qt`
+    setting is used in the `.pro` file).
 * Open Qt Creator, click File, Open, then choose this project's .pro
   file.
 * Build & Run (if you have trouble compiling, see
@@ -20,12 +24,12 @@ This is a modernized fork by poikilos (see CHANGELOG.md).
 
 ## Installation
 ### Windows
-* copy install.bat to your build directory if you are not using a
-  release version.
+* If you are not using a release version, compile the program (see
+  above) then copy install.bat to your build directory.
 * double-click install.bat (read any messages that appear then press
   a key to continue when prompted).
-* Associate the b3d file extension (and possibly other Irrlicht-
-  compatible 3D mesh formats) with
+* Associate the B3D file extension (and possibly other Irrlicht-
+  compatible 3D mesh formats--X and OBJ are tested) with
   `%USERPROFILE%\Applications\b3view\b3view.exe` (right-click a b3d
   file, then Open With, show additional programs, then either paste that
   path or choose This PC, C:, Users, your username, Applications,
@@ -59,6 +63,9 @@ This is a modernized fork by poikilos (see CHANGELOG.md).
   "Slower," or use `-` key or `+`/`=` key. By default, the world runs
   at 60fps and the animation runs as 30 fps (Irrlicht does interpolation
   automatically).
+* cycle through textures in `../textures` using `t` key (`e` to go back)
+  (such as for Minetest mods, where model must be in `modname/models/`
+  and texture must be in `modname/textures/`)
 
 ## Known Issues
 * Warn on missing texture.

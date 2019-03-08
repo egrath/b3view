@@ -58,6 +58,7 @@ private:
 
 public:
     std::wstring m_PreviousPath;
+    std::wstring m_PrevTexturePath;
 
 
     Engine();
@@ -66,7 +67,7 @@ public:
     void run();
     void loadMesh( const std::wstring &fileName );
     void reloadMesh();
-    void loadTexture( const std::wstring &fileName );
+    bool loadTexture( const std::wstring &fileName );
     void setMeshDisplayMode( bool wireframe = false, bool lighting = true );
     bool isAnimating();
     void playAnimation();

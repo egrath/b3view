@@ -112,7 +112,7 @@ wstring Utility::delimiter(const wstring &path)
     return ret;
 }
 
-bool Utility::exists(const std::string& name) {
+bool Utility::isFile(const std::string& name) {
     if (FILE *file = fopen(name.c_str(), "r")) {
         fclose(file);
         return true;
@@ -135,13 +135,13 @@ std::string Utility::toString(const std::wstring& ws) {
     const converter_type::result result = converter.out(state, ws.data(), ws.data() + ws.length(), from_next, &to[0], &to[0] + to.size(), to_next);
     if (result == converter_type::ok or result == converter_type::noconv) {
         const std::string s(&to[0], to_next);
-        std::cout <<"std::string =     "<<s<<std::endl;
-        ret += s;
+        //std::cout <<"std::string =     "<<s<<std::endl;
+        ret = s;
     }
     return ret;
 }
 
-bool Utility::exists(const std::wstring& name) {
+bool Utility::isFile(const std::wstring& name) {
     std::string name_s = toString(name);
     if (FILE *file = fopen(name_s.c_str(), "r")) {
         fclose(file);

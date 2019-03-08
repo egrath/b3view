@@ -208,9 +208,16 @@ void Engine::reloadMesh()
     }
 }
 
-void Engine::loadTexture(const wstring &fileName)
+bool Engine::loadTexture(const wstring &fileName)
 {
-    m_LoadedMesh->setMaterialTexture(0, this->m_Driver->getTexture(fileName.c_str()));
+    ITexture* texture = this->m_Driver->getTexture(fileName.c_str());
+    bool ret = false;
+    if (texture != nullptr) {
+        m_LoadedMesh->setMaterialTexture(0, texture);
+        ret = true;
+    }
+    this->m_PrevTexturePath = fileName;
+    return ret;
 }
 
 void Engine::setMeshDisplayMode( bool wireframe, bool lighting )
