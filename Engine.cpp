@@ -124,6 +124,8 @@ s32 Engine::getNumberOfVertices()
 
 Engine::Engine()
 {
+    this->worldFPS = 60;
+    this->prevFPS = 30;
 #if WIN32
     m_Device = createDevice( EDT_DIRECT3D9, dimension2d<u32>( 1024, 768 ), 32, false, false, false, nullptr );
 #else
@@ -170,6 +172,7 @@ Engine::Engine()
     m_WindowSize = new dimension2d<u32>();
     m_WindowSize->Width = m_Driver->getScreenSize().Width;
     m_WindowSize->Height = m_Driver->getScreenSize().Height;
+    this->playAnimation();
 }
 
 Engine::~Engine()
@@ -187,8 +190,8 @@ void Engine::loadMesh( const wstring &fileName )
     //fn.assign(fileName.c_str());
     // std::wcerr << "fileName = " << fn << endl;
     // std::wcerr << "fileName = " << fileName << endl;
-    this->m_EventHandler->m_PreviousPath = fileName;
-    // std::wcerr << "this->m_EventHandler->m_PreviousPath = " << this->m_EventHandler->m_PreviousPath.c_str() << endl;
+    this->m_PreviousPath = fileName;
+    // std::wcerr << "this->m_PreviousPath = " << this->m_PreviousPath.c_str() << endl;
     // }
     if( m_LoadedMesh != nullptr )
         m_LoadedMesh->remove();
@@ -199,9 +202,9 @@ void Engine::loadMesh( const wstring &fileName )
 
 void Engine::reloadMesh()
 {
-    if (this->m_EventHandler->m_PreviousPath.length() > 0) {
-        std::wcerr << "this->m_EventHandler->m_PreviousPath = " << this->m_EventHandler->m_PreviousPath.c_str() << endl;
-        loadMesh(this->m_EventHandler->m_PreviousPath);
+    if (this->m_PreviousPath.length() > 0) {
+        std::wcerr << "this->m_PreviousPath = " << this->m_PreviousPath.c_str() << endl;
+        loadMesh(this->m_PreviousPath);
     }
 }
 
@@ -231,18 +234,89 @@ void Engine::setMeshDisplayMode( bool wireframe, bool lighting )
     }
 }
 
+bool Engine::isAnimating()
+{
+    return this->isPlaying;
+}
+
+void Engine::playAnimation()
+{
+    if (this->animationFPS() < 1) {
+        this->setAnimationFPS(5);
+    }
+    if (!this->isAnimating()) {
+        if (this->m_LoadedMesh != nullptr) {
+            if (this->prevFPS < 1) this->prevFPS = 5;
+            this->m_LoadedMesh->setAnimationSpeed(this->prevFPS);
+        }
+    }
+    this->isPlaying = true;
+}
+
+void Engine::pauseAnimation()
+{
+    if (this->isAnimating()) {
+        this->prevFPS = animationFPS();
+        if (this->m_LoadedMesh != nullptr) {
+            this->prevFPS = this->m_LoadedMesh->getAnimationSpeed();
+            this->m_LoadedMesh->setAnimationSpeed(0);
+        }
+    }
+    this->isPlaying = false;
+}
+
+void Engine::toggleAnimation()
+{
+    if (this->isAnimating()) {
+        this->pauseAnimation();
+        debug() << "paused " << this->animationFPS() << "fps" << endl;
+    }
+    else {
+        this->playAnimation();
+        debug() << "unpaused " << this->animationFPS() << "fps" << endl;
+    }
+
+}
+
+void Engine::setAnimationFPS(u32 animationFPS)
+{
+    if (this->m_LoadedMesh != nullptr) {
+        this->m_LoadedMesh->setAnimationSpeed(animationFPS);
+    }
+}
+
+u32 Engine::animationFPS()
+{
+    u32 ret = 0;
+    if (this->m_LoadedMesh != nullptr) {
+        ret = this->m_LoadedMesh->getAnimationSpeed();
+    }
+    return ret;
+}
+
 void Engine::run()
 {
-    u32 timePerFrame = ( u32 ) ( 1000.0f / 60 );
+    u32 timePerFrame = 1000.0f;
+    if (this->worldFPS > 0) {
+        timePerFrame = ( u32 ) ( 1000.0f / this->worldFPS );
+    }
     ITimer *timer = m_Device->getTimer();       
 
-    // Run the Device with 60 frames/sec
+    // Run the Device with fps frames/sec
     while( m_Device->run() && m_RunEngine )
     {
         u32 startTime = timer->getRealTime();
 
         checkResize();
-
+        if (this->m_LoadedMesh != nullptr) {
+            //this->m_LoadedMesh->setAnimationSpeed(this->fps);
+            if (isPlaying) {
+                this->m_LoadedMesh->setLoopMode(true);
+            }
+            else {
+                this->m_LoadedMesh->setLoopMode(false);
+            }
+        }
         m_Driver->beginScene();
         drawBackground();           // Draw Background
         drawAxisLines();            // Draw XYZ Axis

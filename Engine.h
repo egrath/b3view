@@ -29,6 +29,7 @@ class Engine
     friend class View;
 
 private:
+    std::wstring m_NextPath;
     irr::IrrlichtDevice *m_Device;
     irr::video::IVideoDriver *m_Driver;
     irr::scene::ISceneManager *m_Scene;
@@ -51,8 +52,14 @@ private:
     void checkResize();
     irr::gui::IGUIEnvironment *getGUIEnvironment() const;
     irr::s32 getNumberOfVertices();
+    bool isPlaying;
+    irr::u32 worldFPS;
+    irr::u32 prevFPS;
 
 public:
+    std::wstring m_PreviousPath;
+
+
     Engine();
     ~Engine();  
 
@@ -61,6 +68,12 @@ public:
     void reloadMesh();
     void loadTexture( const std::wstring &fileName );
     void setMeshDisplayMode( bool wireframe = false, bool lighting = true );
+    bool isAnimating();
+    void playAnimation();
+    void pauseAnimation();
+    void toggleAnimation();
+    void setAnimationFPS(irr::u32 animationFPS);
+    irr::u32 animationFPS();
 };
 
 #endif // ENGINE_H

@@ -1,5 +1,10 @@
 # Changelog
 
+## [git] - 2019-03-07
+(poikilos)
+### Added
+* playback controls
+
 ## [git] - 2019-03-06
 (poikilos)
 ### Added

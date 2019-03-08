@@ -125,6 +125,17 @@ if [ -f "$mime_path" ]; then
         echo "Successfully copied '$MIMETYPES_DB_PATH/packages/$mime_name'"
     fi
 
+    # Since OBJ Mime type is broken on linux (detected as TGIF), trying
+    # to add an overlapping mime type breaks it worse (KDE detects the
+    # file as "plain text file" if the xml file below is installed)
+    mime_name=model-obj.xml
+    mime_path="$mimes_path/$mime_name"
+    # cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
+    # if [ -f "$MIMETYPES_DB_PATH/packages/$mime_name" ]; then
+        # echo "Successfully copied '$MIMETYPES_DB_PATH/packages/$mime_name'"
+	# rm -f "$MIMETYPES_DB_PATH/packages/$mime_name"
+    # fi
+
     echo "Updating mime type database '$MIMETYPES_DB_PATH'..."
     update-mime-database "$MIMETYPES_DB_PATH"  # must contain packages
 else

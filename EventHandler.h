@@ -30,9 +30,6 @@ class EventHandler : public irr::IEventReceiver
 private:
     irr::IrrlichtDevice *m_Device;
     map<EventReceiverType, IEventReceiver*> *m_EventReceivers;
-    bool KeyIsDown[irr::KEY_KEY_CODES_COUNT];
-    irr::s32 keyState[irr::KEY_KEY_CODES_COUNT];
-    irr::s32 LMouseState,RMouseState;
 public:
     EventHandler( irr::IrrlichtDevice *device );
     ~EventHandler();
@@ -41,7 +38,6 @@ public:
 
     // IEventReceiver
     virtual bool OnEvent( const irr::SEvent &event );
-    std::wstring m_PreviousPath;
 };
 
 #endif // EVENTHANDLER_H

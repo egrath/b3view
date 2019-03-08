@@ -21,7 +21,9 @@ enum UserInterfaceElements
     UIE_FILEMENU                    = 1003,
     UIE_PLAYBACKSTARTSTOPBUTTON     = 1004,
     UIE_VIEWMENU                    = 1005,
-    UIE_LOADTEXTUREDIALOG           = 1006
+    UIE_LOADTEXTUREDIALOG           = 1006,
+    UIE_PLAYBACKINCREASEBUTTON      = 1007,
+    UIE_PLAYBACKDECREASEBUTTON      = 1008
 };
 
 enum UserInterfaceCommands
@@ -49,7 +51,15 @@ private:
     bool m_WireframeDisplay;
     bool m_Lighting;
 
+    bool KeyIsDown[irr::KEY_KEY_CODES_COUNT];
+    irr::s32 keyState[irr::KEY_KEY_CODES_COUNT];
+    irr::s32 LMouseState,RMouseState;
+
 public:
+    irr::gui::IGUIButton *playbackStartStopButton;
+    irr::gui::IGUIButton *playbackIncreaseButton;
+    irr::gui::IGUIButton *playbackDecreaseButton;
+
     UserInterface( Engine *device );
     ~UserInterface();
     irr::gui::IGUIEnvironment *getGUIEnvironment() const;

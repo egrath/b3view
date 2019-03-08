@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="model/obj">
+        <comment>OBJ file</comment>
+        <icon name="model-obj"/>
+        <glob-deleteall/>
+        <remove fileExtension=".obj" />
+        <mimeMap fileExtension=".obj" mimeType="text/plain" />
+        <glob pattern="*.obj"/>
+    </mime-type>
+</mime-info>

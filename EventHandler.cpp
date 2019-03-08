@@ -11,14 +11,6 @@ using namespace irr::gui;
 // Public
 EventHandler::EventHandler( IrrlichtDevice *device )
 {
-    // For monitoring single press: see
-    // <http://irrlicht.sourceforge.net/forum/viewtopic.php?p=210744>
-    for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
-        KeyIsDown[i] = false;
-    for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
-        keyState[i] = 0;
-    LMouseState = 0;
-    RMouseState = 0;
     m_Device = device;
     m_EventReceivers = new map<EventReceiverType, IEventReceiver *>();
 }
@@ -49,16 +41,8 @@ bool EventHandler::OnEvent( const SEvent &event )
         iter->second->OnEvent( event );
     }
     else if (event.EventType == EET_KEY_INPUT_EVENT) {
-        if (event.KeyInput.PressedDown && !KeyIsDown[event.KeyInput.Key]) {
-            std::wstring basePath = L".";
-            if (this->m_PreviousPath.length() > 0) {
-                // std::wcerr << "this->m_PreviousPath: " <<  this->m_PreviousPath.c_str() << endl;
-                std::wstring lastDirPath = Utility::parentOfPath(m_PreviousPath);
-                std::wcerr << "lastDirPath: " <<  lastDirPath << endl;
-            }
-            else debug() <<  "Keydown" << endl;
-        }
-        KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
+        map<EventReceiverType,IEventReceiver *>::iterator iter = m_EventReceivers->find( ERT_USERINTERFACE );
+        iter->second->OnEvent( event );
     }
     else if (event.EventType == EET_USER_EVENT)
     {

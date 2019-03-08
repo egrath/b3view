@@ -55,6 +55,10 @@ This is a modernized fork by poikilos (see CHANGELOG.md).
   file. However, the program is much easier to use if you associate the
   format with b3view (see "Installation" above) so you can just double-
   click the file to open b3view automatically.
+* To change frame rate in increments of 5 fps, click "Faster" or
+  "Slower," or use `-` key or `+`/`=` key. By default, the world runs
+  at 60fps and the animation runs as 30 fps (Irrlicht does interpolation
+  automatically).
 
 ## Known Issues
 * Warn on missing texture.
