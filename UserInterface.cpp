@@ -184,7 +184,7 @@ bool UserInterface::loadNextTexture(int direction)
         std::wstring texturesPath = parentPath + dirSeparator + L"textures";
         // std::wcerr << "lastName: " <<  lastName << endl;
         // std::wcerr << "pathWithoutExt: " <<  Utility::withoutExtension(m_PreviousPath) << endl;
-        //std::wcerr << "nameWithoutExt: " <<  Utility::withoutExtension(lastName) << endl;
+        // std::wcerr << "nameWithoutExt: " <<  Utility::withoutExtension(lastName) << endl;
         std::wstring tryTexPath = texturesPath + dirSeparator + Utility::withoutExtension(lastName) + L".png";
         std::wcerr << "tryTexPath: " << tryTexPath << endl;
         if (direction==0 && Utility::isFile(tryTexPath)) {
@@ -201,42 +201,45 @@ bool UserInterface::loadNextTexture(int direction)
                 ret = this->m_Engine->loadTexture(this->m_Engine->m_NextPath);
             }
             else {
-                //wcerr << L"converting path " << texturesPath << endl;
-                //std::string path = Utility::toString(texturesPath);
+                // wcerr << L"converting path " << texturesPath << endl;
+                // std::string path = Utility::toString(texturesPath);
                 std::wstring path = texturesPath;
 
-                //cerr << "looking for next texture in " << path << endl;
-                wcerr << "looking for next texture in " << path << endl;
+                // cerr << "looking for next texture in " << path << endl;
+                // wcerr << "looking for next texture in " << path << endl;
 
                 fs::directory_iterator end_itr; // default construction yields past-the-end
 
                 std::wstring nextPath = L"";
                 std::wstring retroPath = L"";
                 std::wstring lastPath = L"";
-                //std::string nextPath = "";
+                // std::string nextPath = "";
 
                 bool found = false;
-                //for (directory_iterator itr(path); itr != end_itr; ++itr) {
-                for (const auto & itr : fs::directory_iterator(texturesPath)) {
-                    // std::cout << entry.path() << std::endl;
-                    if (!is_directory(itr.status())) {
-                    //if (!itr.is_directory()) {
-                        // cycle through files (go to next after m_PrevTexturePath
-                        // if any, otherwise first)
-                        if (nextPath.length() == 0) nextPath  = itr.path().wstring();
-                        lastPath = itr.path().wstring();
-                        if (found) {
-                            nextPath = itr.path().wstring();
-                            break;
+                if (fs::is_directory(fs::status(texturesPath))) {
+                    // for (directory_iterator itr(path); itr != end_itr; ++itr) {
+                    for (const auto & itr : fs::directory_iterator(texturesPath)) {
+                        // std::cout << entry.path() << std::endl;
+                        if (!is_directory(itr.status())) {
+                        // if (!itr.is_directory()) {
+                            // cycle through files (go to next after m_PrevTexturePath
+                            // if any, otherwise first)
+                            if (nextPath.length() == 0) nextPath  = itr.path().wstring();
+                            lastPath = itr.path().wstring();
+                            if (found) {
+                                nextPath = itr.path().wstring();
+                                break;
+                            }
+                            if (itr.path().wstring()==this->m_Engine->m_PrevTexturePath) found = true;
+                            if (!found) retroPath = itr.path().wstring();
                         }
-                        if (itr.path().wstring()==this->m_Engine->m_PrevTexturePath) found = true;
-                        if (!found) retroPath = itr.path().wstring();
                     }
+                    if (retroPath.length()==0) retroPath = lastPath;  // previous is last if at beginning
+                    if (direction < 0) nextPath = retroPath;
+                    if (nextPath.length() > 0) ret = this->m_Engine->loadTexture(nextPath);
+                    wcerr << "chose texture '" << nextPath << "': " << (ret?"OK":"FAIL") << endl;
                 }
-                if (retroPath.length()==0) retroPath = lastPath;  // previous is last if at beginning
-                if (direction < 0) nextPath = retroPath;
-                if (nextPath.length() > 0) ret = this->m_Engine->loadTexture(nextPath);
-                wcerr << "chose texture '" << nextPath << "': " << (ret?"OK":"FAIL") << endl;
+                // else wcerr << "no '" << texturesPath << "'" << endl;
             }
         }
     }
