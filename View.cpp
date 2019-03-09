@@ -1,4 +1,5 @@
 #include "View.h"
+#include "Engine.h"
 
 using namespace irr;
 using namespace irr::core;
@@ -8,7 +9,10 @@ void View::setNewCameraPosition()
 {
     vector3d<f32> newCameraPosition;
     ICameraSceneNode *camera = m_Engine->m_Scene->getActiveCamera();
-
+    vector3df oldCamPos = camera->getPosition();
+    // vector3df oldCamRot = camera->getRotation();
+    // NOTE: rotationToDirection converts a rotation to a vec3 direction.
+    // vector3df oldCamRot = m_Engine->tmpPosVec3f.?(m_Engine->tmpTargetVec3f);
     newCameraPosition.X = 0;
     newCameraPosition.Y = m_CameraDistance * sin( m_Pitch );
     newCameraPosition.Z = m_CameraDistance * cos( m_Pitch );
@@ -17,7 +21,11 @@ void View::setNewCameraPosition()
     yawMatrix.setRotationRadians( vector3df( 0, m_Yaw, 0 ));
     yawMatrix.transformVect( newCameraPosition );
 
-    camera->setPosition( newCameraPosition );    
+    newCameraPosition.Y = oldCamPos.Y;
+    camera->setPosition( newCameraPosition );
+    // vector3df newRotation();
+    // camera->setRotation();
+    // camera->setTarget(m_Engine->tmpTargetVec3f);
 
     // Set Light direction
     setNewLightDirection( newCameraPosition );
@@ -44,8 +52,29 @@ View::View( Engine *engine )
     // Set Camera Distance
     m_CameraDistance = 10;
 
-    debug() << "Yaw: " << m_Yaw << endl;
-    debug() << "Pitch: " << m_Pitch << endl;
+    // vectors for angle are opposite, since camera revolves around center
+    vector3df offsetVec3(
+        engine->tmpPosVec3f.X-engine->tmpTargetVec3f.X,
+        engine->tmpPosVec3f.Y-engine->tmpTargetVec3f.Y,
+        engine->tmpPosVec3f.Z-engine->tmpTargetVec3f.Z
+    );
+    // m_CameraDistance = sqrtf()
+    m_CameraDistance = offsetVec3.getLength();
+    // NOTE: rotationToDirection converts a rotation to a vec3 direction
+    // vector3df rotationVec3 = engine->tmpPosVec3f.?(engine->tmpTargetVec3f);
+    // vector3df rotationVec3 = engine->tmpTargetVec3f.?(engine->tmpPosVec3f);
+
+    // see rogerborg on <http://irrlicht.sourceforge.net/forum/viewtopic.php?f=1&t=30477>
+    // const f32 dot = engine->tmpTargetVec3f.dotProduct(engine->tmpPosVec3f); // to...(from) // angle only
+
+    m_Yaw = atan2(offsetVec3.X, offsetVec3.Z);
+    m_Pitch = asin(-offsetVec3.Y);
+
+    // m_Yaw = rotationVec3.Y;
+    // m_Pitch = rotationVec3.X;
+
+    debug() << "Yaw: " << radToDeg(m_Yaw) << endl;
+    debug() << "Pitch: " << radToDeg(m_Pitch) << endl;
 }
 
 View::~View()

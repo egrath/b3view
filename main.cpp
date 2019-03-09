@@ -44,8 +44,8 @@ int main( int argc, char **argv )
         engine->loadMesh( wstring( initialFileName ));
         free( initialFileName );
     }
-    else
-        engine->loadMesh( L"test.b3d" );
+//    else
+//        engine->loadMesh( L"test.b3d" );
 
     engine->run();
 

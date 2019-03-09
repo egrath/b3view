@@ -6,7 +6,6 @@
 #include <utility>
 
 #include <irrlicht/irrlicht.h>
-
 #include "Debug.h"
 
 using std::cout;

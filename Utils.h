@@ -1,9 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <cmath>
+#include <string>
+
 #include <irrlicht/irrlicht.h>
-#include "Debug.h"
 
 class Utility
 {

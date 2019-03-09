@@ -8,6 +8,10 @@
 // #include <filesystem>  // requires C++17
 #include <experimental/filesystem>  // requires C++14 such as gcc 8.2.1
 
+#include "Debug.h"
+#include "Engine.h"
+#include "Utils.h"
+
 using namespace irr;
 using namespace irr::core;
 using namespace irr::gui;

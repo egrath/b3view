@@ -3,11 +3,7 @@
 
 #include <irrlicht/irrlicht.h>
 
-#include "Debug.h"
-#include "Engine.h"
-#include "Utils.h"
-
-
+class Engine;
 
 class View : public irr::IEventReceiver
 {

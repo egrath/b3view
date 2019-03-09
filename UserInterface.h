@@ -1,17 +1,11 @@
 #ifndef USERINTERFACE_H
 #define USERINTERFACE_H
 
+#include <irrlicht/irrlicht.h>
+#include "extlib/CGUITTFont.h"
+
 // Forward declaration of class Engine
 class Engine;
-
-#include <sstream>
-#include <string>
-#include <irrlicht/irrlicht.h>
-
-#include "Debug.h"
-#include "Engine.h"
-
-#include "extlib/CGUITTFont.h"
 
 enum UserInterfaceElements
 {

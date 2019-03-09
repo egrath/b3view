@@ -9,6 +9,12 @@
 ### Changed
 * only try to load png or jpg textures--skip others when cycling
 * cycle backwards correctly
+* fix some of the header creep (remove unecessary includes in h files)
+* improve initial camera position and angle (see top of characters since
+  camera is higher; z-forward characters face camera at an angle)
+* Clarify relationship between camera start position in m_Engine and
+  m_View's rotation (m_Pitch and m_Yaw). Now, `setNewCameraPosition`
+  operates on view correctly (relatively) no matter where camera starts.
 
 ## [git] - 2019-03-07
 (poikilos)

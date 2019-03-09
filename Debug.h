@@ -2,8 +2,6 @@
 #define DEBUG_H
 
 #include <iostream>
-#include <cassert>
-
 
 std::ostream & debug();
 

@@ -1,12 +1,14 @@
+#include "Utils.h"
 #include <string>
 #include <iostream>
 #include <clocale>
 #include <locale>
 #include <vector>
+#include <cmath>
 #include <cwctype>  // #include <cwtype>
 #include <algorithm>
 
-#include "Utils.h"
+#include "Debug.h"
 
 using namespace irr::core;
 using namespace irr::scene;

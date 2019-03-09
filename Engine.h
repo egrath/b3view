@@ -11,11 +11,7 @@ class View;
 #include <vector>
 
 #include <irrlicht/irrlicht.h>
-
 #include "EventHandler.h"
-#include "UserInterface.h"
-#include "View.h"
-
 #include "extlib/CGUITTFont.h"
 
 enum SceneItemID
@@ -58,6 +54,14 @@ private:
     irr::u32 worldFPS;
     irr::u32 prevFPS;
     std::vector<std::wstring> textureExtensions;
+    // Making materials in contructor or setupScene causes segfault at
+    // `m_Driver->setMaterial( *lineX );` in
+    // `Engine::drawAxisLines` for unknown reason:
+//    irr::video::SMaterial *lineX;
+//    irr::video::SMaterial *lineY;
+//    irr::video::SMaterial *lineZ;
+    irr::core::vector3df tmpPosVec3f;
+    irr::core::vector3df tmpTargetVec3f;
 
 public:
     std::wstring m_PreviousPath;

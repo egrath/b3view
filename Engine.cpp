@@ -1,5 +1,9 @@
 #include "Engine.h"
 
+#include "UserInterface.h"
+#include "View.h"
+#include "Utils.h"
+
 using std::cout;
 using std::wcerr;
 using std::endl;
@@ -27,8 +31,11 @@ void Engine::setupScene()
     m_Scene->setAmbientLight( SColorf( 0.2f, 0.2f, 0.2f ));
 
     // Setup Camera
-    ICameraSceneNode *camera = m_Scene->addCameraSceneNode( nullptr, vector3df( 0, 0, -10 ), vector3df() );
-    camera->setAspectRatio(( f32 ) m_Driver->getScreenSize().Width / m_Driver->getScreenSize().Height );
+    // (so z-forward characters face camera partially (formerly vector3df( 0, 0, -10 ), vector3df())
+    tmpPosVec3f = vector3df( 4.5, 3, 9 );
+    tmpTargetVec3f = vector3df(0, 3, 0);
+    ICameraSceneNode *camera = m_Scene->addCameraSceneNode(nullptr, tmpPosVec3f, tmpTargetVec3f); // this will be overridden by View m_Yaw and m_Pitch--see "calculate m_Yaw" further down
+    camera->setAspectRatio((f32)m_Driver->getScreenSize().Width / m_Driver->getScreenSize().Height);
 }
 
 IGUIEnvironment * Engine::getGUIEnvironment() const
@@ -175,6 +182,9 @@ Engine::Engine()
     m_WindowSize = new dimension2d<u32>();
     m_WindowSize->Width = m_Driver->getScreenSize().Width;
     m_WindowSize->Height = m_Driver->getScreenSize().Height;
+
+    // (do not calculate m_Yaw and m_Pitch, here, but in View constructor)
+
     this->playAnimation();
 }
 

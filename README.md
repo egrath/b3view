@@ -133,6 +133,8 @@ only applies to Visual Studio users.)
   such as from <https://sledjhamr.org/source/media/Irrlicht/>)
   **"Feel free to use however you like, commercial etc, credits are
   Appreciated..."** -Psionic
+* icon (b3view.xcf, p3view.png) Creative Commons Attribution Share-Alike
+  4.0 [poikilos](https://poikilos.org)
 * All files not mentioned above, and not described in text files in the
   same folder as media (such as "build" folder) are licensed under the
   **GPL v3** as per <https://code.google.com/archive/p/b3view/>
