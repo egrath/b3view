@@ -1,6 +1,6 @@
 # b3view
-Press 't' for Minetest ../textures with with this (poikilos') forked
-model viewer for B3D, X, or OBJ files (or any supported by Irrlicht).
+Press 't' for Minetest ../textures with this (poikilos') forked model
+viewer for B3D, X, or OBJ files (or any supported by Irrlicht).
 
 ![screenshot with gull from poikilos mobs_sky fork](https://github.com/poikilos/b3view/raw/master/screenshot.jpg)
 
@@ -8,11 +8,11 @@ Website: [poikilos.org](https://poikilos.org)
 
 ## Main Features in poikilos fork
 * stabilized (makes sure font, model or texture loads before using)
-* modernized includes (`#include` statements specify irrlicht directory
-  instead of assuming it)
-* double-click if this program is associated with the file types (**mime
-  types** are installed by install.sh to allow this on GNU+Linux Systems
-  --see Compile and Install)
+* modernized includes (`#include` statements specify "irrlicht"
+  directory instead of assuming it)
+* double-click after you associate this program with the file types
+  (**mime types** are installed by install.sh to allow this on GNU+Linux
+  Systems--see Compile and Install)
 * hotkeys to cycle through textures and reload model OR texture
   (see [Usage](#Usage) below).
 * see also CHANGELOG.md
@@ -21,9 +21,9 @@ Website: [poikilos.org](https://poikilos.org)
 (the original version of this section is from
 <https://code.google.com/archive/p/b3view/wikis/BuildingFromSource.wiki>)
 
-### Prequisites
-* C++ Compiler (Linux: gcc [C++14], icc; Windows: the project file was
-  created for Visual Studio 2010 but C++14 is required--update or see
+### Prerequisites
+* C++ Compiler (Linux: gcc [C++14], icc; Windows: the project file is
+  from Visual Studio 2010, but C++14 is required--update or see
   [Troubleshooting](#Troubleshooting) and comments for the `#include`
   statements in UserInterface.cpp if you have compiler or linker errors)
 * Irrlicht Library
@@ -35,7 +35,7 @@ Website: [poikilos.org](https://poikilos.org)
 ```bash
 qmake make -f Makefile.Debug
 ```
-This will (hopfully) build a binary in the "build" subdirectory.
+This will (hopefully) build a binary in the "build" subdirectory.
 See [Troubleshooting](#Troubleshooting) for compiling via GUI.
 
 ### Windows
@@ -46,8 +46,8 @@ only applies to Visual Studio users.)
   directory which **contains** the "irrlicht" directory.
   After building, you end up with a "win32_build" folder in the source
   tree which contains the win32 binary.
-* Additionally you have to manually copy the files
-  from the "build" directory to the output folder
+* Additionally, you have to manually copy the files
+  from the "build" directory to the output folder.
 
 ### Troubleshooting
 (gcc and GUI compilation)
@@ -59,7 +59,7 @@ only applies to Visual Studio users.)
   (such as via `sudo dnf -y install qt-devel qt-creator irrlicht-devel`
   on Fedora 29)
   - Qt is not actually used, only Qt creator (the `CONFIG -= qt`
-    setting is used in the `.pro` file).
+    setting is in the `.pro` file).
 * Open Qt Creator, click File, Open, then choose this project's .pro
   file.
 * Build & Run (if you have trouble compiling, see
@@ -68,7 +68,7 @@ only applies to Visual Studio users.)
   if your build directory is not `./build`
 * (optional) Copy your favorite public-licensed font over
   `./build/ClearSansRegular.tff` or to current working directory of
-  program
+  program (unpredictable on Linux when you double-click files)
 
 ## Install
 ### Windows
@@ -76,8 +76,8 @@ only applies to Visual Studio users.)
   above) then copy install.bat to your build directory.
 * double-click install.bat (read any messages that appear then press
   a key to continue when prompted).
-* Associate the B3D file extension (and possibly other Irrlicht-
-  compatible 3D mesh formats--X and OBJ are tested) with
+* Associate the B3D file extension, and other Irrlicht-compatible 3D
+  mesh formats such as X and OBJ.
   `%USERPROFILE%\Applications\b3view\b3view.exe` (right-click a b3d
   file, then Open With, show additional programs, then either paste that
   path or choose This PC, C:, Users, your username, Applications,
@@ -91,7 +91,7 @@ only applies to Visual Studio users.)
   will install to $USER/Applications after giving an opportunity to
   cancel with Ctrl C during a countdown).
   (the script will install the "Blitz3D Model File" (`model/b3d`) mime
-  type, which will be used for all files with the `b3d` extension--
+  type, which your OS will use for all files with the `b3d` extension--
   this allows associating the file type with a program).
 * Associate the b3d file extension (and possibly other Irrlicht-
   compatible 3D mesh formats) with b3view: Right-click any B3D file,
@@ -103,7 +103,7 @@ only applies to Visual Studio users.)
 
 
 ## Usage
-* You can click "File," "Open.", then choose an Irrlicht-compatible B3D
+* You can click "File," "Open," then choose an Irrlicht-compatible B3D
   file. However, the program is much easier to use if you associate the
   format with b3view (see "Installation" above) so you can just double-
   click the file to open b3view automatically.
@@ -131,7 +131,7 @@ only applies to Visual Studio users.)
   <http://www.psionic3d.co.uk/downloads/ninja.zip>
   (I've seen this file ripped and in several repos, but finally found
   the original site above, which has additional skins not found
-  elsewhere. Original site is listed in "ninja animation ranges.txt"
+  elsewhere. The original site is listed in "ninja animation ranges.txt"
   such as from <https://sledjhamr.org/source/media/Irrlicht/>)
   **"Feel free to use however you like, commercial etc, credits are
   Appreciated..."** -Psionic
