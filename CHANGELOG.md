@@ -4,6 +4,7 @@
 (poikilos)
 ### Added
 * hotkeys to reload model/texture
+* license (see README.md for licensing history)
 
 ### Changed
 * only try to load png or jpg textures--skip others when cycling

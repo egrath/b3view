@@ -16,6 +16,39 @@ Website: [poikilos.org](https://poikilos.org)
 * see also CHANGELOG.md
 
 ## Compile
+(the original version of this section is from
+<https://code.google.com/archive/p/b3view/wikis/BuildingFromSource.wiki>)
+
+### Prequisites
+* C++ Compiler (Linux: gcc [C++14], icc; Windows: the project file was
+  created for Visual Studio 2010 but C++14 is required--update or see
+  [Troubleshooting](#Troubleshooting) and comments for the `#include`
+  statements in UserInterface.cpp if you have compiler or linker errors)
+* Irrlicht Library
+* Linux only: QtCreator/Qt (4 or 5)
+
+### Linux
+* To generate a working makefile, edit the .pro file to reflect your
+  path settings and run:
+```bash
+qmake make -f Makefile.Debug
+```
+This will (hopfully) build a binary in the "build" subdirectory.
+See [Troubleshooting](#Troubleshooting) for compiling via GUI.
+
+### Windows
+(If you use MinGW the Linux section of instructions apply. This section
+only applies to Visual Studio users.)
+* In the "win32" folder of your source tree there's a VC++2010 Solution.
+  Open it up and edit the properties to reflect the correct path to the
+  directory which **contains** the "irrlicht" directory.
+  After building, you end up with a "win32_build" folder in the source
+  tree which contains the win32 binary.
+* Additionally you have to manually copy the files
+  from the "build" directory to the output folder
+
+### Troubleshooting
+(gcc and GUI compilation)
 * If you are using GCC to compile, you may need gcc 8.2.1 or higher
   (C++14 `experimental/filesystem` works on 8.2.1 for sure, but C++17's
   `filesystem` has not been tested and requires minor changes to
@@ -89,7 +122,7 @@ Website: [poikilos.org](https://poikilos.org)
 * Test and complete install.bat on Windows.
 
 ## Authors
-* ClearSansRegular.ttf (Apache 2.0 License) by Intel
+* ClearSansRegular.ttf (**Apache 2.0 License**) by Intel
   <https://01.org/clear-sans> via
   <https://www.fontsquirrel.com/fonts/clear-sans>
 * ninja.b3d, nskin*.jpg by Psionic (psionic3d.co.uk)
@@ -98,8 +131,10 @@ Website: [poikilos.org](https://poikilos.org)
   the original site above, which has additional skins not found
   elsewhere. Original site is listed in "ninja animation ranges.txt"
   such as from <https://sledjhamr.org/source/media/Irrlicht/>)
-  "Feel free to use however you like, commercial etc, credits are
-  Appreciated..." -Psionic
-* Until original author egrath responds, all files not mentioned above
-  are licensed under the GitHub ToS (GitHub has rights to distribute
-  the files, in addition to the original author).
+  **"Feel free to use however you like, commercial etc, credits are
+  Appreciated..."** -Psionic
+* All files not mentioned above, and not described in text files in the
+  same folder as media (such as "build" folder) are licensed under the
+  **GPL v3** as per <https://code.google.com/archive/p/b3view/>
+  (see [LICENSE](https://github.com/poikilos/b3view/blob/master/LICENSE)
+  file in your favorite text editor).
