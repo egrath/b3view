@@ -67,6 +67,7 @@ public:
     void run();
     void loadMesh( const std::wstring &fileName );
     void reloadMesh();
+    void reloadTexture();
     bool loadTexture( const std::wstring &fileName );
     void setMeshDisplayMode( bool wireframe = false, bool lighting = true );
     bool isAnimating();

@@ -1,6 +1,7 @@
 #include "Engine.h"
 
 using std::cout;
+using std::wcerr;
 using std::endl;
 using std::wstring;
 using std::wstringstream;
@@ -188,10 +189,10 @@ void Engine::loadMesh( const wstring &fileName )
     // if (m_LoadedMesh != nullptr) {
     //std::wstring fn;
     //fn.assign(fileName.c_str());
-    // std::wcerr << "fileName = " << fn << endl;
-    // std::wcerr << "fileName = " << fileName << endl;
+    // wcerr << "fileName = " << fn << endl;
+    // wcerr << "fileName = " << fileName << endl;
     this->m_PreviousPath = fileName;
-    // std::wcerr << "this->m_PreviousPath = " << this->m_PreviousPath.c_str() << endl;
+    // wcerr << "this->m_PreviousPath = " << this->m_PreviousPath.c_str() << endl;
     // }
     if( m_LoadedMesh != nullptr )
         m_LoadedMesh->remove();
@@ -203,8 +204,16 @@ void Engine::loadMesh( const wstring &fileName )
 void Engine::reloadMesh()
 {
     if (this->m_PreviousPath.length() > 0) {
-        std::wcerr << "this->m_PreviousPath = " << this->m_PreviousPath.c_str() << endl;
+        // wcerr << "this->m_PreviousPath = " << this->m_PreviousPath.c_str() << endl;
         loadMesh(this->m_PreviousPath);
+    }
+}
+
+void Engine::reloadTexture()
+{
+    if (this->m_PrevTexturePath.length() > 0) {
+        // wcerr << "this->m_PrevTexturePath = " << this->m_PrevTexturePath.c_str() << endl;
+        loadTexture(this->m_PrevTexturePath);
     }
 }
 

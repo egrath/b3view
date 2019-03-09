@@ -1,5 +1,10 @@
 # Changelog
 
+## [git] - 2019-03-09
+(poikilos)
+### Added
+* hotkeys to reload model/texture
+
 ## [git] - 2019-03-07
 (poikilos)
 ### Added

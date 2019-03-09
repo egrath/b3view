@@ -205,6 +205,9 @@ bool UserInterface::loadNextTexture(int direction)
                 // std::string path = Utility::toString(texturesPath);
                 std::wstring path = texturesPath;
 
+                if (!fs::is_directory(fs::status(path)))
+                    path = lastDirPath;  // cycle textures in model's directory instead
+
                 // cerr << "looking for next texture in " << path << endl;
                 // wcerr << "looking for next texture in " << path << endl;
 
@@ -216,9 +219,9 @@ bool UserInterface::loadNextTexture(int direction)
                 // std::string nextPath = "";
 
                 bool found = false;
-                if (fs::is_directory(fs::status(texturesPath))) {
+                if (fs::is_directory(fs::status(path))) {
                     // for (directory_iterator itr(path); itr != end_itr; ++itr) {
-                    for (const auto & itr : fs::directory_iterator(texturesPath)) {
+                    for (const auto & itr : fs::directory_iterator(path)) {
                         // std::cout << entry.path() << std::endl;
                         if (!is_directory(itr.status())) {
                         // if (!itr.is_directory()) {
@@ -239,7 +242,7 @@ bool UserInterface::loadNextTexture(int direction)
                     if (nextPath.length() > 0) ret = this->m_Engine->loadTexture(nextPath);
                     wcerr << "chose texture '" << nextPath << "': " << (ret?"OK":"FAIL") << endl;
                 }
-                // else wcerr << "no '" << texturesPath << "'" << endl;
+                // else wcerr << "no '" << path << "'" << endl;
             }
         }
     }
@@ -257,6 +260,12 @@ bool UserInterface::OnEvent( const SEvent &event )
             }
             else if (event.KeyInput.Key == irr::KEY_KEY_E) {
                 loadNextTexture(-1);
+            }
+            else if (event.KeyInput.Key == irr::KEY_KEY_R) {
+                m_Engine->reloadTexture();
+            }
+            else if (event.KeyInput.Key == irr::KEY_F5) {
+                m_Engine->reloadMesh();
             }
             else if (event.KeyInput.Char == L'+' || event.KeyInput.Char == L'=') {
                 m_Engine->setAnimationFPS(m_Engine->animationFPS() + 5);
