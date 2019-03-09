@@ -89,10 +89,10 @@ void UserInterface::setupUserInterface()
         m_Engine->m_FontPath = L"C:\\Windows\\Fonts\\arialbd.ttf";
     }
     if (!Utility::isFile(m_Engine->m_FontPath)) {
-        m_Engine->m_FontPath = L"/usr/share/fonts/gnu-free/FreeSansBold.ttf";
+        m_Engine->m_FontPath = L"/usr/share/fonts/liberation/LiberationSans-Bold.ttf";
     }
     if (!Utility::isFile(m_Engine->m_FontPath)) {
-        m_Engine->m_FontPath = L"/usr/share/fonts/liberation/LiberationSans-Bold.ttf";
+        m_Engine->m_FontPath = L"/usr/share/fonts/gnu-free/FreeSansBold.ttf";
     }
     if (!Utility::isFile(m_Engine->m_FontPath)) {
         m_Engine->m_FontPath = L"/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf";
