@@ -5,6 +5,10 @@
 ### Added
 * hotkeys to reload model/texture
 
+### Changed
+* only try to load png or jpg textures--skip others when cycling
+* cycle backwards correctly
+
 ## [git] - 2019-03-07
 (poikilos)
 ### Added

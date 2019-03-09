@@ -3,6 +3,8 @@
 #include <clocale>
 #include <locale>
 #include <vector>
+#include <cwctype>  // #include <cwtype>
+#include <algorithm>
 
 #include "Utils.h"
 
@@ -96,6 +98,23 @@ wstring Utility::withoutExtension(const wstring &path)
     return ret;
 }
 
+wstring Utility::extensionOf(const wstring &path)
+{
+    std::wstring ret = L"";
+    std::wstring::size_type lastDotPos = path.find_last_of(L".");
+    if (lastDotPos != std::wstring::npos) {
+        std::wstring::size_type lastSlashPos = path.find_last_of(L"/");
+        if (lastSlashPos == std::wstring::npos) {
+            std::wstring::size_type lastSlashPos = path.find_last_of(L"\\");
+        }
+        if (lastSlashPos != std::wstring::npos) {
+            if (lastDotPos > lastSlashPos) ret = path.substr(lastDotPos + 1);
+        }
+        else ret = path.substr(lastDotPos + 1);
+    }
+    return ret;
+}
+
 wstring Utility::delimiter(const wstring &path)
 {
     std::wstring ret = L"/";
@@ -138,6 +157,20 @@ std::string Utility::toString(const std::wstring& ws) {
         //std::cout <<"std::string =     "<<s<<std::endl;
         ret = s;
     }
+    return ret;
+}
+
+std::string Utility::toLower(const std::string &s)
+{
+    std::string ret = s;
+    std::transform( ret.begin(), ret.end(), ret.begin(), ::tolower);
+    return ret;
+}
+
+wstring Utility::toLower(const wstring &s)
+{
+    wstring ret = s;
+    std::transform( ret.begin(), ret.end(), ret.begin(), towlower);
     return ret;
 }
 

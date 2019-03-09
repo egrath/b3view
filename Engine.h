@@ -8,6 +8,8 @@ class View;
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <vector>
+
 #include <irrlicht/irrlicht.h>
 
 #include "EventHandler.h"
@@ -55,6 +57,7 @@ private:
     bool isPlaying;
     irr::u32 worldFPS;
     irr::u32 prevFPS;
+    std::vector<std::wstring> textureExtensions;
 
 public:
     std::wstring m_PreviousPath;

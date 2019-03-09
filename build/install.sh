@@ -112,17 +112,30 @@ if [ ! -d "$MIMETYPES_DB_PATH/packages" ]; then
     # echo "Creating '$MIMETYPES_DB_PATH/packages'..."
     mkdir "$MIMETYPES_DB_PATH/packages"
 fi
+update_mime_enable=false
 if [ -f "$mime_path" ]; then
     # echo "Copying as '$MIMETYPES_DB_PATH/packages/$mime_name'..."
-    cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
-    if [ -f "$MIMETYPES_DB_PATH/packages/$mime_name" ]; then
-        echo "Successfully copied '$MIMETYPES_DB_PATH/packages/$mime_name'"
+    try_dest="$MIMETYPES_DB_PATH/packages/$mime_name"
+    if diff -q $mime_path $try_dest; then
+	echo "(You already have an identical $try_dest)"
+    else
+	cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
+	if [ -f "$try_dest" ]; then
+	    echo "Successfully copied '$try_dest'"
+	    update_mime_enable=true
+	fi
     fi
     mime_name=model-x.xml
     mime_path="$mimes_path/$mime_name"
-    cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
-    if [ -f "$MIMETYPES_DB_PATH/packages/$mime_name" ]; then
-        echo "Successfully copied '$MIMETYPES_DB_PATH/packages/$mime_name'"
+    try_dest="$MIMETYPES_DB_PATH/packages/$mime_name"
+    if diff -q $mime_path $try_dest; then
+	echo "(You already have an identical $try_dest)"
+    else
+	cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
+	if [ -f "$try_dest" ]; then
+	    echo "Successfully copied '$try_dest'"
+	    update_mime_enable=true
+	fi
     fi
 
     # Since OBJ Mime type is broken on linux (detected as TGIF), trying
@@ -136,8 +149,11 @@ if [ -f "$mime_path" ]; then
 	# rm -f "$MIMETYPES_DB_PATH/packages/$mime_name"
     # fi
 
-    echo "Updating mime type database '$MIMETYPES_DB_PATH'..."
-    update-mime-database "$MIMETYPES_DB_PATH"  # must contain packages
+    if [ "@$update_mime_enable" = "@true" ]; then
+	echo "Updating mime type database '$MIMETYPES_DB_PATH'..."
+	update-mime-database "$MIMETYPES_DB_PATH"  # must contain packages
+    fi
+    echo "Done."
 else
     echo "ERROR: $mime_path must be in working directory in order to install it using this script."
 fi

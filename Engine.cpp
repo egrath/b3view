@@ -127,6 +127,8 @@ Engine::Engine()
 {
     this->worldFPS = 60;
     this->prevFPS = 30;
+    this->textureExtensions.push_back(L"png");
+    this->textureExtensions.push_back(L"jpg");
 #if WIN32
     m_Device = createDevice( EDT_DIRECT3D9, dimension2d<u32>( 1024, 768 ), 32, false, false, false, nullptr );
 #else
@@ -186,25 +188,22 @@ Engine::~Engine()
 
 void Engine::loadMesh( const wstring &fileName )
 {
-    // if (m_LoadedMesh != nullptr) {
-    //std::wstring fn;
-    //fn.assign(fileName.c_str());
-    // wcerr << "fileName = " << fn << endl;
-    // wcerr << "fileName = " << fileName << endl;
-    this->m_PreviousPath = fileName;
-    // wcerr << "this->m_PreviousPath = " << this->m_PreviousPath.c_str() << endl;
-    // }
+    this->m_PreviousPath = fileName;  // even if bad, set this
+                                      // to allow F5 to reload
+
     if( m_LoadedMesh != nullptr )
         m_LoadedMesh->remove();
 
-    m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( m_Scene->getMesh( fileName.c_str()));
-    Utility::dumpMeshInfoToConsole( m_LoadedMesh );
+    irr::scene::IAnimatedMesh* mesh = m_Scene->getMesh( fileName.c_str());
+    if (mesh != nullptr) {
+        m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( mesh );
+        Utility::dumpMeshInfoToConsole( m_LoadedMesh );
+    }
 }
 
 void Engine::reloadMesh()
 {
     if (this->m_PreviousPath.length() > 0) {
-        // wcerr << "this->m_PreviousPath = " << this->m_PreviousPath.c_str() << endl;
         loadMesh(this->m_PreviousPath);
     }
 }
@@ -212,7 +211,6 @@ void Engine::reloadMesh()
 void Engine::reloadTexture()
 {
     if (this->m_PrevTexturePath.length() > 0) {
-        // wcerr << "this->m_PrevTexturePath = " << this->m_PrevTexturePath.c_str() << endl;
         loadTexture(this->m_PrevTexturePath);
     }
 }
@@ -325,7 +323,6 @@ void Engine::run()
 
         checkResize();
         if (this->m_LoadedMesh != nullptr) {
-            //this->m_LoadedMesh->setAnimationSpeed(this->fps);
             if (isPlaying) {
                 this->m_LoadedMesh->setLoopMode(true);
             }
