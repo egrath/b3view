@@ -1,12 +1,25 @@
 # b3view
-View B3D, X, OBJ files (and possibly other files supported by Irrlicht)
-with double-click if this program is associated with the file types.
+Press 't' for Minetest ../textures with with this (poikilos') forked
+model viewer for B3D, X, or OBJ files (or any supported by Irrlicht).
 
-This is a modernized fork by poikilos (see CHANGELOG.md).
+Website: [poikilos.org](https://poikilos.org)
 
-## Compiling
-* You may need gcc 8.2.1 or higher (C++17 filesystem works on 8.2.1
-  for sure)
+## Main Features in poikilos fork
+* stabilized (makes sure font, model or texture loads before using)
+* modernized includes (`#include` statements specify irrlicht directory
+  instead of assuming it)
+* double-click if this program is associated with the file types (**mime
+  types** are installed by install.sh to allow this on GNU+Linux Systems
+  --see Compile and Install)
+* hotkeys to cycle through textures and reload model OR texture
+  (see [Usage](#Usage) below).
+* see also CHANGELOG.md
+
+## Compile
+* If you are using GCC to compile, you may need gcc 8.2.1 or higher
+  (C++14 `experimental/filesystem` works on 8.2.1 for sure, but C++17's
+  `filesystem` has not been tested and requires minor changes to
+  `#include` and `using` statements in UserInterface.cpp)
 * Make sure you have the Irrlicht and Qt development packages
   (such as via `sudo dnf -y install qt-devel qt-creator irrlicht-devel`
   on Fedora 29)
@@ -22,7 +35,7 @@ This is a modernized fork by poikilos (see CHANGELOG.md).
   `./build/ClearSansRegular.tff` or to current working directory of
   program
 
-## Installation
+## Install
 ### Windows
 * If you are not using a release version, compile the program (see
   above) then copy install.bat to your build directory.
@@ -35,7 +48,7 @@ This is a modernized fork by poikilos (see CHANGELOG.md).
   path or choose This PC, C:, Users, your username, Applications,
   b3view, b3view.exe)
 
-### GNU/Linux Systems
+### GNU+Linux Systems
 * copy install.sh to your build directory if you are not using a release
   version and your build directory is not `./build`
 * run install.sh as root, such by running `sudo bash install.sh` in
