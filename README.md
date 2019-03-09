@@ -1,7 +1,7 @@
 # b3view
 Press 't' for Minetest ../textures with with this (poikilos') forked
 model viewer for B3D, X, or OBJ files (or any supported by Irrlicht).
-
+![screenshot with gull from poikilos mobs_sky fork](https://github.com/poikilos/b3view/raw/master/screenshot.jpg)
 Website: [poikilos.org](https://poikilos.org)
 
 ## Main Features in poikilos fork
