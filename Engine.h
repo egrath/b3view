@@ -60,8 +60,9 @@ private:
 //    irr::video::SMaterial *lineX;
 //    irr::video::SMaterial *lineY;
 //    irr::video::SMaterial *lineZ;
-    irr::core::vector3df tmpPosVec3f;
-    irr::core::vector3df tmpTargetVec3f;
+    irr::core::vector3df m_CamPos;
+    irr::core::vector3df m_CamTarget;
+    std::wstring m_FontPath = L"ClearSansRegular.ttf";  // core::stringc has implicit conversion to io::path
 
 public:
     std::wstring m_PreviousPath;

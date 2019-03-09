@@ -32,9 +32,9 @@ void Engine::setupScene()
 
     // Setup Camera
     // (so z-forward characters face camera partially (formerly vector3df( 0, 0, -10 ), vector3df())
-    tmpPosVec3f = vector3df( 4.5, 3, 9 );
-    tmpTargetVec3f = vector3df(0, 3, 0);
-    ICameraSceneNode *camera = m_Scene->addCameraSceneNode(nullptr, tmpPosVec3f, tmpTargetVec3f); // this will be overridden by View m_Yaw and m_Pitch--see "calculate m_Yaw" further down
+    m_CamPos = vector3df( 4.5, 3, 9 );
+    m_CamTarget = vector3df(0, 3, 0);
+    ICameraSceneNode *camera = m_Scene->addCameraSceneNode(nullptr, m_CamPos, m_CamTarget); // this will be overridden by View m_Yaw and m_Pitch--see "calculate m_Yaw" further down
     camera->setAspectRatio((f32)m_Driver->getScreenSize().Width / m_Driver->getScreenSize().Height);
 }
 
@@ -165,7 +165,8 @@ Engine::Engine()
 
     // Load font for displaying Axis names
     m_AxisFontFace = new CGUITTFace();
-    if (m_AxisFontFace->load( "ClearSansRegular.ttf" )) {
+    // NOTE: m_FontPath is modified y UserInterface constructor above if font was missing
+    if (m_AxisFontFace->load(m_FontPath.c_str())) {
         m_AxisFont = new CGUITTFont( m_UserInterface->getGUIEnvironment() );
         m_AxisFont->attach( m_AxisFontFace, 14 );
         m_AxisFont->AntiAlias = false;

@@ -68,7 +68,13 @@ only applies to Visual Studio users.)
   if your build directory is not `./build`
 * (optional) Copy your favorite public-licensed font over
   `./build/ClearSansRegular.tff` or to current working directory of
-  program (unpredictable on Linux when you double-click files)
+  program (varies on Linux when you double-click files). If you don't,
+  and didn't copy the included one to the output directory,
+  the following fonts will be tried, in the following order:
+  * C:\Windows\Fonts: calibrib.ttf, arialbd.ttf
+  * /usr/share/fonts: liberation/LiberationSans-Bold.ttf,
+    gnu-free/FreeSansBold.ttf, dejavu/DejaVuSans-Bold.ttf,
+    google-droid/DroidSans-Bold.ttf
 
 ## Install
 ### Windows
@@ -122,6 +128,8 @@ only applies to Visual Studio users.)
 ## Known Issues
 * Warn on missing texture.
 * Test and complete install.bat on Windows.
+* Look for fonts on OS X (see "Set Font for UI Elements" in
+  UserInterface.cpp).
 
 ## Authors
 * ClearSansRegular.ttf (**Apache 2.0 License**) by Intel

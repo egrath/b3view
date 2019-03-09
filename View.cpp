@@ -54,9 +54,9 @@ View::View( Engine *engine )
 
     // vectors for angle are opposite, since camera revolves around center
     vector3df offsetVec3(
-        engine->tmpPosVec3f.X-engine->tmpTargetVec3f.X,
-        engine->tmpPosVec3f.Y-engine->tmpTargetVec3f.Y,
-        engine->tmpPosVec3f.Z-engine->tmpTargetVec3f.Z
+        engine->m_CamPos.X-engine->m_CamTarget.X,
+        engine->m_CamPos.Y-engine->m_CamTarget.Y,
+        engine->m_CamPos.Z-engine->m_CamTarget.Z
     );
     // m_CameraDistance = sqrtf()
     m_CameraDistance = offsetVec3.getLength();

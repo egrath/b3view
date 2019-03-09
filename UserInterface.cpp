@@ -81,15 +81,33 @@ void UserInterface::setupUserInterface()
     // Set Font for UI Elements
     m_GuiFontFace = new CGUITTFace();
     // irrString defines stringc as string<c8>
-    std::wstring fontPath = L"ClearSansRegular.ttf";  // core::stringc has implicit conversion to io::path
     // if (QFile(fontPath).exists()) {}
-    if (m_GuiFontFace->load(fontPath.c_str())) {  // actually takes `const io::path &`
+    if (!Utility::isFile(m_Engine->m_FontPath)) {
+        m_Engine->m_FontPath = L"C:\\Windows\\Fonts\\calibrib.ttf";
+    }
+    if (!Utility::isFile(m_Engine->m_FontPath)) {
+        m_Engine->m_FontPath = L"C:\\Windows\\Fonts\\arialbd.ttf";
+    }
+    if (!Utility::isFile(m_Engine->m_FontPath)) {
+        m_Engine->m_FontPath = L"/usr/share/fonts/gnu-free/FreeSansBold.ttf";
+    }
+    if (!Utility::isFile(m_Engine->m_FontPath)) {
+        m_Engine->m_FontPath = L"/usr/share/fonts/liberation/LiberationSans-Bold.ttf";
+    }
+    if (!Utility::isFile(m_Engine->m_FontPath)) {
+        m_Engine->m_FontPath = L"/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf";
+    }
+    if (!Utility::isFile(m_Engine->m_FontPath)) {
+        m_Engine->m_FontPath = L"/usr/share/fonts/google-droid/DroidSans-Bold.ttf";
+    }
+
+    if (m_GuiFontFace->load(m_Engine->m_FontPath.c_str())) {  // actually takes `const io::path &`
         m_GuiFont = new CGUITTFont( m_Gui );
         m_GuiFont->attach( m_GuiFontFace, 14 );
         m_Gui->getSkin()->setFont( m_GuiFont );
     }
     else {
-        std::wcerr << L"WARNING: Missing '" << fontPath << L"'" << endl;
+        std::wcerr << L"WARNING: Missing '" << m_Engine->m_FontPath << L"'" << endl;
         delete m_GuiFontFace;
         m_GuiFontFace = nullptr;
         if (m_GuiFont != nullptr) {
