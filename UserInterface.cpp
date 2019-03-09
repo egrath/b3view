@@ -2,8 +2,11 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+
+// NOTE: to use filesystem, you must also include the fs library such
+// as via the `-lstdc++fs` linker option -- see b3view.pro
 // #include <filesystem>  // requires C++17
-#include <experimental/filesystem>  // requires C++14 such as gcc 8.2.1 (you must also include fs library with -lstdc++fs -- see b3view.pro)
+#include <experimental/filesystem>  // requires C++14 such as gcc 8.2.1
 
 using namespace irr;
 using namespace irr::core;

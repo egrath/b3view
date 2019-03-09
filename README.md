@@ -86,7 +86,6 @@ Website: [poikilos.org](https://poikilos.org)
 
 ## Known Issues
 * Warn on missing texture.
-* Implement Start/Stop button functionality.
 * Test and complete install.bat on Windows.
 
 ## Authors
@@ -97,10 +96,10 @@ Website: [poikilos.org](https://poikilos.org)
   <http://www.psionic3d.co.uk/downloads/ninja.zip>
   (I've seen this file ripped and in several repos, but finally found
   the original site above, which has additional skins not found
-  elsewhere, via included "ninja animation ranges.txt" from
-  <https://sledjhamr.org/source/media/Irrlicht/>)
+  elsewhere. Original site is listed in "ninja animation ranges.txt"
+  such as from <https://sledjhamr.org/source/media/Irrlicht/>)
   "Feel free to use however you like, commercial etc, credits are
   Appreciated..." -Psionic
 * Until original author egrath responds, all files not mentioned above
   are licensed under the GitHub ToS (GitHub has rights to distribute
-  the files).
+  the files, in addition to the original author).
