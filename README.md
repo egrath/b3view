@@ -1,6 +1,6 @@
 # b3view
 Press 't' for Minetest ../textures with this (poikilos') forked model
-viewer for B3D, X, or OBJ files (or any supported by Irrlicht).
+viewer for B3D, X, OBJ, MS3D, 3DS (or any supported by Irrlicht).
 
 ![screenshot with gull from poikilos mobs_sky fork](https://github.com/poikilos/b3view/raw/master/screenshot.jpg)
 
@@ -126,12 +126,17 @@ only applies to Visual Studio users.)
   the model file's own directory will be used.
 * `F5`: Reload last model file
 * `r`: Reload last texture file
+* drag with middle button: rotate view
+* drag with middle button while holding shift key: pan up and down
+* `z` or `y`: change camera "up" axis to Z or Y (Y is default;
+  automatically changed to Z when 3ds file is loaded)
 
 ## Known Issues
 * Warn on missing texture.
 * Test and complete install.bat on Windows.
 * Look for fonts on OS X (see "Set Font for UI Elements" in
   UserInterface.cpp).
+* (View.cpp) Set pitch correctly for shift & middle mouse button drag.
 
 ## Authors
 * ClearSansRegular.ttf (**Apache 2.0 License**) by Intel

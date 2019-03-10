@@ -161,14 +161,6 @@ void UserInterface::handleMenuItemPressed( IGUIContextMenu *menu )
 UserInterface::UserInterface( Engine *engine )
 {
     this->playbackStartStopButton = nullptr;
-    // For monitoring single press: see
-    // <http://irrlicht.sourceforge.net/forum/viewtopic.php?p=210744>
-    for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
-        KeyIsDown[i] = false;
-    for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
-        keyState[i] = 0;
-    LMouseState = 0;
-    RMouseState = 0;
 
     m_Engine = engine;
     m_Gui = engine->getGUIEnvironment();
@@ -266,8 +258,11 @@ bool UserInterface::OnEvent( const SEvent &event )
 {
     // Events arriving here should be destined for us
     if (event.EventType == EET_KEY_INPUT_EVENT) {
-        if (event.KeyInput.PressedDown && !KeyIsDown[event.KeyInput.Key]) {
-            if (event.KeyInput.Key == irr::KEY_KEY_T) {
+        if (event.KeyInput.PressedDown && !m_Engine->KeyIsDown[event.KeyInput.Key]) {
+            if (event.KeyInput.Key == irr::KEY_F5) {
+                m_Engine->reloadMesh();
+            }
+            else if (event.KeyInput.Key == irr::KEY_KEY_T) {
                 loadNextTexture(1);
             }
             else if (event.KeyInput.Key == irr::KEY_KEY_E) {
@@ -276,8 +271,11 @@ bool UserInterface::OnEvent( const SEvent &event )
             else if (event.KeyInput.Key == irr::KEY_KEY_R) {
                 m_Engine->reloadTexture();
             }
-            else if (event.KeyInput.Key == irr::KEY_F5) {
-                m_Engine->reloadMesh();
+            else if (event.KeyInput.Key == irr::KEY_KEY_Z) {
+                m_Engine->setZUp(true);
+            }
+            else if (event.KeyInput.Key == irr::KEY_KEY_Y) {
+                m_Engine->setZUp(false);
             }
             else if (event.KeyInput.Char == L'+' || event.KeyInput.Char == L'=') {
                 m_Engine->setAnimationFPS(m_Engine->animationFPS() + 5);
@@ -292,7 +290,7 @@ bool UserInterface::OnEvent( const SEvent &event )
             }
             // std::wcerr << "Char: " << event.KeyInput.Char << endl;
         }
-        KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
+        m_Engine->KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
 
         return true;
     }
@@ -302,30 +300,26 @@ bool UserInterface::OnEvent( const SEvent &event )
         switch ( event.MouseInput.Event)
         {
         case EMIE_LMOUSE_LEFT_UP:
-            if ( LMouseState == 2)
-            {
-            LMouseState = 3;
+            if ( m_Engine->LMouseState == 2) {
+                m_Engine->LMouseState = 3;
             }
             break;
 
         case EMIE_LMOUSE_PRESSED_DOWN:
-            if ( LMouseState == 0)
-            {
-            LMouseState = 1;
+            if ( m_Engine->LMouseState == 0) {
+                m_Engine->LMouseState = 1;
             }
             break;
 
         case EMIE_RMOUSE_LEFT_UP:
-            if ( RMouseState  == 2)
-            {
-            RMouseState = 3;
+            if ( m_Engine->RMouseState  == 2) {
+                m_Engine->RMouseState = 3;
             }
             break;
 
         case EMIE_RMOUSE_PRESSED_DOWN:
-            if ( RMouseState == 0)
-            {
-            RMouseState = 1;
+            if ( m_Engine->RMouseState == 0) {
+                m_Engine->RMouseState = 1;
             }
             break;
         }

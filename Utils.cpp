@@ -187,3 +187,9 @@ bool Utility::isFile(const std::wstring& name) {
 }
 
 
+//don't do late instantiation (see header file)
+//template<typename T>
+//bool Utility::equalsApprox(T f1, T f2)
+//{
+//    return abs(f2-f1) < .00000001;  // TODO: kEpsilon? (see also <https://en.wikipedia.org/wiki/Machine_epsilon#How_to_determine_machine_epsilon>)
+//}

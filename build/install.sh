@@ -113,50 +113,84 @@ if [ ! -d "$MIMETYPES_DB_PATH/packages" ]; then
     mkdir "$MIMETYPES_DB_PATH/packages"
 fi
 update_mime_enable=false
-if [ -f "$mime_path" ]; then
-    # echo "Copying as '$MIMETYPES_DB_PATH/packages/$mime_name'..."
-    try_dest="$MIMETYPES_DB_PATH/packages/$mime_name"
-    if diff -q $mime_path $try_dest; then
-	echo "(You already have an identical $try_dest)"
-    else
-	cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
-	if [ -f "$try_dest" ]; then
-	    echo "Successfully copied '$try_dest'"
-	    update_mime_enable=true
-	fi
-    fi
-    mime_name=model-x.xml
-    mime_path="$mimes_path/$mime_name"
-    try_dest="$MIMETYPES_DB_PATH/packages/$mime_name"
-    if diff -q $mime_path $try_dest; then
-	echo "(You already have an identical $try_dest)"
-    else
-	cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
-	if [ -f "$try_dest" ]; then
-	    echo "Successfully copied '$try_dest'"
-	    update_mime_enable=true
-	fi
-    fi
-
-    # Since OBJ Mime type is broken on linux (detected as TGIF), trying
-    # to add an overlapping mime type breaks it worse (KDE detects the
-    # file as "plain text file" if the xml file below is installed)
-    mime_name=model-obj.xml
-    mime_path="$mimes_path/$mime_name"
-    # cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
-    # if [ -f "$MIMETYPES_DB_PATH/packages/$mime_name" ]; then
-        # echo "Successfully copied '$MIMETYPES_DB_PATH/packages/$mime_name'"
-	# rm -f "$MIMETYPES_DB_PATH/packages/$mime_name"
-    # fi
-
-    if [ "@$update_mime_enable" = "@true" ]; then
-	echo "Updating mime type database '$MIMETYPES_DB_PATH'..."
-	update-mime-database "$MIMETYPES_DB_PATH"  # must contain packages
-    fi
-    echo "Done."
-else
-    echo "ERROR: $mime_path must be in working directory in order to install it using this script."
+if [ ! -f "$mime_path" ]; then
+    echo "ERROR: Stopped installing mime types since missing $mime_path"
+    exit 1
 fi
+try_dest="$MIMETYPES_DB_PATH/packages/$mime_name"
+if diff -q $mime_path $try_dest; then
+    echo "* (You already have an identical $try_dest)"
+else
+    cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
+    if [ -f "$try_dest" ]; then
+	echo "* Successfully copied '$try_dest'"
+	update_mime_enable=true
+    fi
+fi
+mime_name=model-x.xml
+mime_path="$mimes_path/$mime_name"
+if [ ! -f "$mime_path" ]; then
+    echo "ERROR: Stopped installing mime types since missing $mime_path"
+    exit 1
+fi
+try_dest="$MIMETYPES_DB_PATH/packages/$mime_name"
+if diff -q $mime_path $try_dest; then
+    echo "* (You already have an identical $try_dest)"
+else
+    cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
+    if [ -f "$try_dest" ]; then
+	echo "* Successfully copied '$try_dest'"
+	update_mime_enable=true
+    fi
+fi
+
+# Since OBJ Mime type is broken on linux (detected as TGIF obj/sym
+# hyperlinked vector graphics format unrelated to Wavefront OBJ
+# format but sharing the same file extension), trying
+# to add an overlapping mime type breaks it worse (KDE detects the
+# file as "plain text file" if the xml file below is installed)
+mime_name=model-obj.xml
+mime_path="$mimes_path/$mime_name"
+#if [ ! -f "$mime_path" ]; then
+    #echo "ERROR: Stopped installing mime types since missing $mime_path"
+    #exit 1
+#fi
+try_dest="$MIMETYPES_DB_PATH/packages/$mime_name"
+#if diff -q $mime_path $try_dest; then
+    #echo "* (You already have an identical $try_dest)"
+#else
+    #cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
+    if [ -f "$MIMETYPES_DB_PATH/packages/$mime_name" ]; then
+	# echo "* Successfully copied '$MIMETYPES_DB_PATH/packages/$mime_name'"
+	echo "* Removing '$MIMETYPES_DB_PATH/packages/$mime_name' (overlaps with system usually)"
+	rm -f "$MIMETYPES_DB_PATH/packages/$mime_name"
+	update_mime_enable=true
+    fi
+#fi
+
+mime_name=model-ms3d.xml
+mime_path="$mimes_path/$mime_name"
+if [ ! -f "$mime_path" ]; then
+    echo "ERROR: Stopped installing mime types since missing $mime_path"
+    exit 1
+fi
+try_dest="$MIMETYPES_DB_PATH/packages/$mime_name"
+if diff -q $mime_path $try_dest; then
+    echo "(You already have an identical $try_dest)"
+else
+    cp -f "$mime_path" "$MIMETYPES_DB_PATH/packages/"
+    if [ -f "$MIMETYPES_DB_PATH/packages/$mime_name" ]; then
+	echo "Successfully copied '$MIMETYPES_DB_PATH/packages/$mime_name'"
+	# rm -f "$MIMETYPES_DB_PATH/packages/$mime_name"
+	update_mime_enable=true
+    fi
+fi
+
+if [ "@$update_mime_enable" = "@true" ]; then
+    echo "Updating mime type database '$MIMETYPES_DB_PATH'..."
+    update-mime-database "$MIMETYPES_DB_PATH"  # must contain packages
+fi
+echo "Done."
 
 echo
 echo

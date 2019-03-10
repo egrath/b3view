@@ -3,6 +3,15 @@
 ## [git] - 2019-03-09
 (poikilos)
 ### Added
+* completed rotation controls (Blender-like)
+* pan up and down (Blender-like, but only up and down)
+* Z or Y to switch ("up" axis)
+* change up axis to Z when 3ds is loaded
+* model-ms3d.xml mime type file
+
+## [git] - 2019-03-09
+(poikilos)
+### Added
 * hotkeys to reload model/texture
 * license (see README.md for licensing history)
 

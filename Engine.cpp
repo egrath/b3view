@@ -132,10 +132,20 @@ s32 Engine::getNumberOfVertices()
 
 Engine::Engine()
 {
+    // For monitoring single press: see
+    // <http://irrlicht.sourceforge.net/forum/viewtopic.php?p=210744>
+    for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
+        KeyIsDown[i] = false;
+    for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
+        keyState[i] = 0;
+    LMouseState = 0;
+    RMouseState = 0;
+
     this->worldFPS = 60;
     this->prevFPS = 30;
     this->textureExtensions.push_back(L"png");
     this->textureExtensions.push_back(L"jpg");
+    this->textureExtensions.push_back(L"bmp");
 #if WIN32
     m_Device = createDevice( EDT_DIRECT3D9, dimension2d<u32>( 1024, 768 ), 32, false, false, false, nullptr );
 #else
@@ -184,7 +194,7 @@ Engine::Engine()
     m_WindowSize->Width = m_Driver->getScreenSize().Width;
     m_WindowSize->Height = m_Driver->getScreenSize().Height;
 
-    // (do not calculate m_Yaw and m_Pitch, here, but in View constructor)
+    // (do not calculate m_Yaw and m_Pitch here--see View constructor)
 
     this->playAnimation();
 }
@@ -209,6 +219,53 @@ void Engine::loadMesh( const wstring &fileName )
     if (mesh != nullptr) {
         m_LoadedMesh = m_Scene->addAnimatedMeshSceneNode( mesh );
         Utility::dumpMeshInfoToConsole( m_LoadedMesh );
+        if (Utility::toLower(Utility::extensionOf(fileName)) == L"3ds") {
+            m_View->setZUp(true);
+        }
+        else {
+            m_View->setZUp(false);
+        }
+        if (m_LoadedMesh != nullptr) {
+            ICameraSceneNode *camera = this->m_Scene->getActiveCamera();
+            aabbox3d<f32> box = m_LoadedMesh->getTransformedBoundingBox();
+            vector3d<float> extents = box.getExtent();
+            if (m_View->zUp()) {
+                float oldDist = m_CamPos.getDistanceFrom(m_CamTarget);
+                float newDist = oldDist;
+                if (oldDist != 0) {
+                    vector3d<float> center = box.getCenter();
+                    vector3df edges[8];
+                    box.getEdges(edges);
+                    /*
+                                              /3--------/7
+                                             /  |      / |
+                                            /   |     /  |
+                                            1---------5  |
+                                            |   2- - -| -6
+                                            |  /      |  /
+                                            |/        | /
+                                            0---------4/
+                    */
+                    newDist = 0;
+                    for (int i=0; i<8; i++) {
+                        float tryDist = center.getDistanceFrom(edges[i]);
+                        if (tryDist>newDist) newDist = tryDist;
+                    }
+                    newDist *= 2;  // so camera doesn't touch model
+                    if (!Utility::equalsApprox<float>(newDist, oldDist)) {
+                        float scale = newDist / oldDist;  // already checked 0
+                        vector3df oldCamPos = camera->getPosition();
+                        m_CamPos = oldCamPos;
+                        m_CamPos.X = m_CamPos.X * scale;
+                        m_CamPos.Y = m_CamPos.Y * scale;
+                        m_CamPos.Z = m_CamPos.Z * scale;
+                        oldCamPos = m_CamPos;
+                        m_View->setCameraDistance(m_CamPos.getDistanceFrom(m_CamTarget));
+                        camera->setPosition(m_CamPos);
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -307,6 +364,13 @@ void Engine::setAnimationFPS(u32 animationFPS)
 {
     if (this->m_LoadedMesh != nullptr) {
         this->m_LoadedMesh->setAnimationSpeed(animationFPS);
+    }
+}
+
+void Engine::setZUp(bool zUp)
+{
+    if (this->m_View != nullptr) {
+        this->m_View->setZUp(zUp);
     }
 }
 

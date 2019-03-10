@@ -45,10 +45,6 @@ private:
     bool m_WireframeDisplay;
     bool m_Lighting;
 
-    bool KeyIsDown[irr::KEY_KEY_CODES_COUNT];
-    irr::s32 keyState[irr::KEY_KEY_CODES_COUNT];
-    irr::s32 LMouseState,RMouseState;
-
 public:
     irr::gui::IGUIButton *playbackStartStopButton;
     irr::gui::IGUIButton *playbackIncreaseButton;

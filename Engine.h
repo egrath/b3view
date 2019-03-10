@@ -63,6 +63,9 @@ private:
     irr::core::vector3df m_CamPos;
     irr::core::vector3df m_CamTarget;
     std::wstring m_FontPath = L"ClearSansRegular.ttf";  // core::stringc has implicit conversion to io::path
+    bool KeyIsDown[irr::KEY_KEY_CODES_COUNT];
+    irr::s32 keyState[irr::KEY_KEY_CODES_COUNT];
+    irr::s32 LMouseState,RMouseState;
 
 public:
     std::wstring m_PreviousPath;
@@ -83,6 +86,7 @@ public:
     void pauseAnimation();
     void toggleAnimation();
     void setAnimationFPS(irr::u32 animationFPS);
+    void setZUp(bool zUp);
     irr::u32 animationFPS();
 };
 
