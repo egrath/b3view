@@ -1,4 +1,5 @@
 # b3view
+("Be View")
 Press 't' for Minetest ../textures with this (poikilos') forked model
 viewer for B3D, X, OBJ, MS3D, 3DS (or any supported by Irrlicht).
 
@@ -137,6 +138,7 @@ only applies to Visual Studio users.)
 * Look for fonts on OS X (see "Set Font for UI Elements" in
   UserInterface.cpp).
 * (View.cpp) Set pitch correctly for shift & middle mouse button drag.
+* Lighting not correct until you rotate or enable z-Up
 
 ## Authors
 * ClearSansRegular.ttf (**Apache 2.0 License**) by Intel
