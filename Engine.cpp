@@ -400,6 +400,7 @@ void Engine::run()
         if (this->m_LoadedMesh != nullptr) {
             if (isPlaying) {
                 this->m_LoadedMesh->setLoopMode(true);
+                this->m_UserInterface->playbackSetFrameEditBox->setText(Utility::toWstring(this->m_LoadedMesh->getFrameNr()).c_str());
             }
             else {
                 this->m_LoadedMesh->setLoopMode(false);

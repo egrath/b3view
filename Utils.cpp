@@ -7,6 +7,7 @@
 #include <cmath>
 #include <cwctype>  // #include <cwtype>
 #include <algorithm>
+#include <sstream>
 
 #include "Debug.h"
 
@@ -176,6 +177,24 @@ wstring Utility::toLower(const wstring &s)
     return ret;
 }
 
+wstring Utility::toWstring(irr::f32 val)
+{
+    return std::to_wstring(val);
+}
+
+wstring Utility::toWstring(int val)
+{
+    return std::to_wstring(val);
+}
+
+irr::f32 Utility::toF32(wstring val)
+{
+    std::wstringstream ss(val);
+    irr::f32 ret = 0;
+    ss >> ret;
+    return ret;
+}
+
 bool Utility::isFile(const std::wstring& name) {
     std::string name_s = toString(name);
     if (FILE *file = fopen(name_s.c_str(), "r")) {
@@ -184,6 +203,11 @@ bool Utility::isFile(const std::wstring& name) {
     } else {
         return false;
     }
+}
+
+std::string Utility::toString(irr::f32 val)
+{
+    return std::to_string(val);
 }
 
 

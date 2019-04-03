@@ -17,7 +17,8 @@ enum UserInterfaceElements
     UIE_VIEWMENU                    = 1005,
     UIE_LOADTEXTUREDIALOG           = 1006,
     UIE_PLAYBACKINCREASEBUTTON      = 1007,
-    UIE_PLAYBACKDECREASEBUTTON      = 1008
+    UIE_PLAYBACKDECREASEBUTTON      = 1008,
+    UIE_PLAYBACKSETFRAMEEDITBOX     = 1009
 };
 
 enum UserInterfaceCommands
@@ -49,6 +50,7 @@ public:
     irr::gui::IGUIButton *playbackStartStopButton;
     irr::gui::IGUIButton *playbackIncreaseButton;
     irr::gui::IGUIButton *playbackDecreaseButton;
+    irr::gui::IGUIEditBox *playbackSetFrameEditBox;
 
     UserInterface( Engine *device );
     ~UserInterface();

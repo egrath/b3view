@@ -17,9 +17,13 @@ public:
     static std::wstring delimiter(const std::wstring &path);
     static bool isFile(const std::string &name);
     static bool isFile(const std::wstring &name);
+    static std::string toString(irr::f32 val);
     static std::string toString(const std::wstring &name);
     static std::string toLower(const std::string &s);
     static std::wstring toLower(const std::wstring &s);
+    static std::wstring toWstring(irr::f32 val);
+    static std::wstring toWstring(int val);
+    static irr::f32 toF32(std::wstring val);
     // compiler doesn't like template function when class is not a template--instantiate immediately
     // see http://processors.wiki.ti.com/index.php/C%2B%2B_Template_Instantiation_Issues
     template <typename T>

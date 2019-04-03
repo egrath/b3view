@@ -78,6 +78,15 @@ void UserInterface::setupUserInterface()
             nullptr
     );
 
+    y += size_y + spacing_y;
+    playbackSetFrameEditBox = m_Gui->addEditBox(
+        L"",
+        rect<s32>( vector2d<s32>( spacing_x, y ), dimension2d<s32>( size_x, size_y )),
+        true,
+        playbackWindow,
+        UIE_PLAYBACKSETFRAMEEDITBOX
+    );
+
     // Set Font for UI Elements
     m_GuiFontFace = new CGUITTFace();
     // irrString defines stringc as string<c8>
@@ -288,6 +297,20 @@ bool UserInterface::OnEvent( const SEvent &event )
             else if (event.KeyInput.Char == L' ') {
                 m_Engine->toggleAnimation();
             }
+            else if (event.KeyInput.Key == irr::KEY_LEFT) {
+                if (this->m_Engine->m_LoadedMesh != nullptr) {
+                    if (m_Engine->isPlaying) m_Engine->toggleAnimation();
+                    this->m_Engine->m_LoadedMesh->setCurrentFrame(round(this->m_Engine->m_LoadedMesh->getFrameNr())-1);
+                    this->playbackSetFrameEditBox->setText(Utility::toWstring(this->m_Engine->m_LoadedMesh->getFrameNr()).c_str());
+                }
+            }
+            else if (event.KeyInput.Key == irr::KEY_RIGHT) {
+                if (this->m_Engine->m_LoadedMesh != nullptr) {
+                    if (m_Engine->isPlaying) m_Engine->toggleAnimation();
+                    this->m_Engine->m_LoadedMesh->setCurrentFrame(round(this->m_Engine->m_LoadedMesh->getFrameNr())+1);
+                    this->playbackSetFrameEditBox->setText(Utility::toWstring(this->m_Engine->m_LoadedMesh->getFrameNr()).c_str());
+                }
+            }
             // std::wcerr << "Char: " << event.KeyInput.Char << endl;
         }
         m_Engine->KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
@@ -369,6 +392,13 @@ bool UserInterface::OnEvent( const SEvent &event )
         if ( ge->EventType == EGET_BUTTON_CLICKED) {
             if (this->m_Engine->animationFPS() >= 5) {
                 this->m_Engine->setAnimationFPS(this->m_Engine->animationFPS() - 5);
+            }
+        }
+        break;
+    case UIE_PLAYBACKSETFRAMEEDITBOX:
+        if ( ge->EventType == EGET_EDITBOX_ENTER) {
+            if (this->m_Engine->m_LoadedMesh != nullptr) {
+                this->m_Engine->m_LoadedMesh->setCurrentFrame(Utility::toF32(this->playbackSetFrameEditBox->getText()));
             }
         }
         break;
