@@ -1,24 +1,11 @@
 #ifndef USERINTERFACE_H
 #define USERINTERFACE_H
 
-// Forward declaration of class Engine
-class Engine;
-
-#include <sstream>
-#include <string>
-#include <irrlicht.h>
-
-#include "Debug.h"
-#include "Engine.h"
-
+#include <irrlicht/irrlicht.h>
 #include "extlib/CGUITTFont.h"
 
-using namespace irr;
-using namespace irr::core;
-using namespace irr::gui;
-
-using std::string;
-using std::wstring;
+// Forward declaration of class Engine
+class Engine;
 
 enum UserInterfaceElements
 {
@@ -27,40 +14,52 @@ enum UserInterfaceElements
     UIE_LOADFILEDIALOG              = 1002,
     UIE_FILEMENU                    = 1003,
     UIE_PLAYBACKSTARTSTOPBUTTON     = 1004,
-    UIE_VIEWMENU                    = 1005
+    UIE_VIEWMENU                    = 1005,
+    UIE_LOADTEXTUREDIALOG           = 1006,
+    UIE_PLAYBACKINCREASEBUTTON      = 1007,
+    UIE_PLAYBACKDECREASEBUTTON      = 1008,
+    UIE_PLAYBACKSETFRAMEEDITBOX     = 1009
 };
 
 enum UserInterfaceCommands
 {
-    UIC_FILE_LOAD       = 1000,
-    UIC_FILE_QUIT       = 1001,
-    UIC_VIEW_WIREFRAME  = 2000,
-    UIC_VIEW_LIGHTING   = 2001
+    UIC_FILE_LOAD           = 1000,
+    UIC_FILE_QUIT           = 1001,
+    UIC_FILE_LOAD_TEXTURE   = 1002,
+    UIC_VIEW_WIREFRAME      = 2000,
+    UIC_VIEW_LIGHTING       = 2001
 };
 
-class UserInterface : public IEventReceiver
+class UserInterface : public irr::IEventReceiver
 {
 private:
     Engine *m_Engine;
-    IGUIEnvironment *m_Gui;
-    CGUITTFont *m_GuiFont;
-    CGUITTFace *m_GuiFontFace;
+    irr::gui::IGUIEnvironment *m_Gui;
+    irr::gui::CGUITTFont *m_GuiFont;
+    irr::gui::CGUITTFace *m_GuiFontFace;
 
     void setupUserInterface();
     void displayLoadFileDialog();
-    void handleMenuItemPressed( IGUIContextMenu *menu );
+    void displayLoadTextureDialog();
+    void handleMenuItemPressed(irr::gui::IGUIContextMenu *menu);
 
     bool m_WireframeDisplay;
     bool m_Lighting;
 
 public:
+    irr::gui::IGUIButton *playbackStartStopButton;
+    irr::gui::IGUIButton *playbackIncreaseButton;
+    irr::gui::IGUIButton *playbackDecreaseButton;
+    irr::gui::IGUIEditBox *playbackSetFrameEditBox;
+
     UserInterface( Engine *device );
     ~UserInterface();
-    IGUIEnvironment * getGUIEnvironment() const;
+    irr::gui::IGUIEnvironment *getGUIEnvironment() const;
     void drawStatusLine() const;
+    bool loadNextTexture(int direction);
 
     // IEventReceiver
-    virtual bool OnEvent( const SEvent &event );
+    virtual bool OnEvent( const irr::SEvent &event );
 };
 
 #endif // USERINTERFACE_H

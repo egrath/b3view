@@ -5,18 +5,13 @@
 #include <map>
 #include <utility>
 
-#include <irrlicht.h>
-
+#include <irrlicht/irrlicht.h>
 #include "Debug.h"
 
 using std::cout;
 using std::endl;
 using std::map;
 using std::make_pair;
-
-using namespace irr;
-using namespace irr::video;
-using namespace irr::gui;
 
 enum EventReceiverType
 {
@@ -29,20 +24,19 @@ enum UserEventIdentifier
     UEI_WINDOWSIZECHANGED = 1
 };
 
-class EventHandler : public IEventReceiver
+class EventHandler : public irr::IEventReceiver
 {
 private:
-    IrrlichtDevice *m_Device;
+    irr::IrrlichtDevice *m_Device;
     map<EventReceiverType, IEventReceiver*> *m_EventReceivers;
-
 public:
-    EventHandler( IrrlichtDevice *device );
+    EventHandler( irr::IrrlichtDevice *device );
     ~EventHandler();
 
-    bool addEventReceiver( EventReceiverType type, IEventReceiver *receiver );
+    bool addEventReceiver(EventReceiverType type, irr::IEventReceiver *receiver );
 
     // IEventReceiver
-    virtual bool OnEvent( const SEvent &event );
+    virtual bool OnEvent( const irr::SEvent &event );
 };
 
 #endif // EVENTHANDLER_H

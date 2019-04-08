@@ -1,0 +1,19 @@
+[Desktop Entry]
+Comment[en_US]=
+Comment=
+Exec=b3view
+GenericName[en_US]=Irrlicht Model Viewer
+GenericName=Irrlicht Model Viewer
+Icon=/usr/local/share/pixmaps/b3view.png
+MimeType=
+Name[en_US]=b3view
+Name=b3view
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=
